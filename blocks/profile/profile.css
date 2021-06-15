@@ -1,0 +1,6 @@
+.profile {
+  outline: 1px solid green;
+  color: #fff;
+  display: flex;
+  align-items: center;
+}
