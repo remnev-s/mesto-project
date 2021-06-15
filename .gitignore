@@ -1,0 +1,10 @@
+.DS_Store
+Thumbs.db
+
+.nova/
+.cache
+
+dist
+*.json
+
+node_modules/
