@@ -1,0 +1,21 @@
+.popup__container {
+  padding: 34px 36px 37px;
+  position: fixed;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  color: #000;
+  max-width: 430px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+@media (max-width: 400px) {
+  .popup__container {
+    /* max-width: 282px; */
+    padding: 25px 22px;
+    width: 73%;
+  }
+}
