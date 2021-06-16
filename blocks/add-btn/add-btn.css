@@ -15,7 +15,7 @@
 /* плюсик на кнопке */
 .add-btn::before,
 .add-btn::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -28,4 +28,10 @@
 
 .add-btn::after {
   transform: rotate(90deg);
+}
+
+@media (max-width: 320px) {
+  .add-btn {
+    width: 100%;
+  }
 }

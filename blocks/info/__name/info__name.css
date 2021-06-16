@@ -3,4 +3,12 @@
   padding-bottom: 16px;
   font-size: 42px;
   line-height: 48px;
+  font-weight: 400;
+}
+
+@media (max-width: 320px) {
+  .info__name {
+    font-size: 27px;
+    line-height: 32px;
+  }
 }

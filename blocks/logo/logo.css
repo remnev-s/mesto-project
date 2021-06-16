@@ -1,3 +1,15 @@
 .logo {
   padding: 45px 0 41px;
 }
+
+@media (max-width: 880px) {
+  .logo {
+    padding-left: 19px;
+  }
+}
+
+@media (max-width: 320px) {
+  .logo {
+    padding-left: 27px;
+  }
+}

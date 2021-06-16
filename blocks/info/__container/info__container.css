@@ -1,3 +1,10 @@
 .info__container {
   display: flex;
 }
+
+@media (max-width: 320px) {
+  .info__container {
+    justify-content: center;
+    justify-content: flex-end;
+  }
+}

@@ -3,3 +3,11 @@
   line-height: 22px;
   margin: 0;
 }
+
+@media (max-width: 320px) {
+  .info__description {
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+  }
+}

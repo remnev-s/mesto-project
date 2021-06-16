@@ -11,3 +11,9 @@
 .info__edit-btn:hover {
   opacity: 0.3;
 }
+
+@media (max-width: 320px) {
+  .info__edit-btn {
+    margin: 5px 13px 0;
+  }
+}
