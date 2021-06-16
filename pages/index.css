@@ -20,22 +20,12 @@
 @import url(../blocks/add-btn/add-btn.css);
 
 @import url(../blocks/elements/elements.css);
+/* @import url(../blocks/wrapper/wrapper.css); */
 @import url(../blocks/elements/__list/elements__list.css);
 @import url(../blocks/elements/__list-item/elements__list-item.css);
 @import url(../blocks/elements/__list-photo/elements__list-photo.css);
-@import url(../blocks/elements/__description/element__description.css);
 @import url(../blocks/elements/__description-wrapper/elements__description-wrapper.css);
+@import url(../blocks/elements/__description/element__description.css);
 
 @import url(../blocks/footer/footer.css);
-
-
-
-
-
-
-
-
-
-
-
-
+@import url(../blocks/footer/__copyright/footer__copyright.css);
