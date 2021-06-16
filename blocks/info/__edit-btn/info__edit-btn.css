@@ -9,7 +9,7 @@
 }
 
 .info__edit-btn:hover {
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 @media (max-width: 320px) {
