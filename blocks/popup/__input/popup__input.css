@@ -7,8 +7,12 @@
   font-size: 14px;
   line-height: 17px;
   font-weight: 400;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.popup__input:not(:last-child) {
+.popup__input:not(:last-of-type) {
   margin-bottom: 20px;
 }

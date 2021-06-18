@@ -2,16 +2,27 @@
   max-width: 358px;
   text-align: center;
   color: #fff;
-  padding: 14px 0 18px;
-  margin-top: 48px;
+  padding: 14px 132px 18px;
+  margin: 48px 0 37px;
   background-color: #000;
   font-size: 18px;
   line-height: 22px;
   font-weight: 400;
   cursor: pointer;
   transition: opacity 0.3s linear;
+  border: none;
 }
 
 .popup__save-btn:hover {
-  opacity: 0.5;
+  opacity: 0.8;
+}
+
+@media (max-width: 510px) {
+  .popup__save-btn {
+    font-size: 14px;
+    line-height: 16px;
+    margin: 45px 0 25px;
+
+    padding: 14px 0;
+  }
 }

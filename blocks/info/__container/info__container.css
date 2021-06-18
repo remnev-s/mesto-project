@@ -1,5 +1,6 @@
 .info__container {
   display: flex;
+  max-width: 400px;
 }
 
 @media (max-width: 320px) {

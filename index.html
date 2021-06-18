@@ -18,9 +18,7 @@
         <div class="info">
           <div class="info__container">
             <h1 class="info__name">Жак-Ив Кусто</h1>
-            <button class="info__edit-btn">
-              <img src="./images/edit-button.svg" />
-            </button>
+            <button class="info__edit-btn" type="button"></button>
           </div>
           <p class="info__description">Исследователь океана</p>
         </div>
@@ -38,10 +36,8 @@
               class="elements__list-photo"
             />
             <div class="elements__description-wrapper">
-              <h2 class="element__description">Карачаевск</h2>
-              <button class="element__like-btn">
-                <img src="./images/heart.svg" />
-              </button>
+              <h2 class="elements__description">Карачаевск</h2>
+              <button class="elements__like-btn" type="button"></button>
             </div>
           </li>
 
@@ -52,10 +48,8 @@
               class="elements__list-photo"
             />
             <div class="elements__description-wrapper">
-              <h2 class="element__description">Гора Эльбрус</h2>
-              <button class="element__like-btn">
-                <img src="./images/heart.svg" />
-              </button>
+              <h2 class="elements__description">Гора Эльбрус</h2>
+              <button class="elements__like-btn" type="button"></button>
             </div>
           </li>
 
@@ -66,10 +60,8 @@
               class="elements__list-photo"
             />
             <div class="elements__description-wrapper">
-              <h2 class="element__description">Домбай</h2>
-              <button class="element__like-btn">
-                <img src="./images/heart.svg" />
-              </button>
+              <h2 class="elements__description">Домбай</h2>
+              <button class="elements__like-btn" type="button"></button>
             </div>
           </li>
 
@@ -80,10 +72,8 @@
               class="elements__list-photo"
             />
             <div class="elements__description-wrapper">
-              <h2 class="element__description">Гора Эльбрус</h2>
-              <button class="element__like-btn">
-                <img src="./images/heart.svg" />
-              </button>
+              <h2 class="elements__description">Гора Эльбрус</h2>
+              <button class="elements__like-btn" type="button"></button>
             </div>
           </li>
 
@@ -94,10 +84,8 @@
               class="elements__list-photo"
             />
             <div class="elements__description-wrapper">
-              <h2 class="element__description">Домбай</h2>
-              <button class="element__like-btn">
-                <img src="./images/heart.svg" />
-              </button>
+              <h2 class="elements__description">Домбай</h2>
+              <button class="elements__like-btn" type="button"></button>
             </div>
           </li>
 
@@ -108,10 +96,8 @@
               class="elements__list-photo"
             />
             <div class="elements__description-wrapper">
-              <h2 class="element__description">Карачаево-Черкесия</h2>
-              <button class="element__like-btn">
-                <img src="./images/heart.svg" />
-              </button>
+              <h2 class="elements__description">Карачаево-Черкесия</h2>
+              <button class="elements__like-btn" type="button"></button>
             </div>
           </li>
         </ul>
@@ -121,22 +107,23 @@
       <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
     </footer>
 
-    <section class="popup popup_opened">
+    <section class="popup">
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__form">
+        <form class="popup__form" name="form">
           <input
             type="text"
-            name="input"
+            name="name"
             class="popup__input"
-            value="Жак-Ив Кусто"
+            placeholder="Жак-Ив Кусто"
           />
           <input
             type="text"
+            name="about"
             class="popup__input"
-            value="Исследователь океана"
+            placeholder="Исследователь океана"
           />
-          <buttom class="popup__save-btn" type="submit">Сохранить</buttom>
+          <button class="popup__save-btn" type="submit">Сохранить</button>
         </form>
         <button class="popup__close-btn" type="button" title="Закрыть">
           Закрыть

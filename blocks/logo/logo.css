@@ -11,5 +11,8 @@
 @media (max-width: 320px) {
   .logo {
     padding-left: 27px;
+    padding-bottom: 31px;
+    width: 103px;
+    height: 24px;
   }
 }

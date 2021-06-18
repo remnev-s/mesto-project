@@ -5,15 +5,19 @@
   transition: opacity 0.3s linear;
   width: 24px;
   height: 24px;
-  margin: 12px 0 0 18px;
+  margin: 12px 10px 0 18px;
+  background-image: url(../../../images/edit-button.svg);
+  padding: 15px;
+  background-repeat: no-repeat;
 }
 
 .info__edit-btn:hover {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 @media (max-width: 320px) {
   .info__edit-btn {
     margin: 5px 13px 0;
+    background-size: 18px;
   }
 }
