@@ -3,10 +3,9 @@
   flex: 1 1 auto;
 }
 
-@media (max-width: 320px) {
+@media (max-width: 400px) {
   .info {
-    /* flex: 0 0 auto; */
-    outline: 1px solid blue;
+    /* outline: 1px solid blue; */
     margin: 0 0 36px;
   }
 }

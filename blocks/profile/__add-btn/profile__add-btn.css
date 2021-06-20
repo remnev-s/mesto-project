@@ -1,4 +1,4 @@
-.add-btn {
+.profile__add-btn {
   position: relative;
   width: 150px;
   height: 50px;
@@ -9,13 +9,13 @@
   transition: opacity 0.3s linear;
 }
 
-.add-btn:hover {
+.profile__add-btn:hover {
   opacity: 0.6;
 }
 
 /* плюсик на кнопке */
-.add-btn::before,
-.add-btn::after {
+.profile__add-btn::before,
+.profile__add-btn::after {
   content: "";
   position: absolute;
   left: 0;
@@ -27,12 +27,12 @@
   border-radius: 1px;
 }
 
-.add-btn::after {
+.profile__add-btn::after {
   transform: rotate(90deg);
 }
 
 @media (max-width: 320px) {
-  .add-btn {
+  .profile__add-btn {
     width: 100%;
   }
 }
