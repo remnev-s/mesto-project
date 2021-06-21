@@ -9,7 +9,7 @@
   overflow: hidden;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
   .info__name {
     font-size: 27px;
     line-height: 32px;
