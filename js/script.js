@@ -10,3 +10,11 @@ infoEdit.addEventListener("click", function () {
 infoPopupClose.addEventListener("click", function () {
   infoPopup.classList.remove("popup_opened");
 });
+
+// infoEdit.addEventListener("click", function () {
+//   infoPopup.classList.toggle("popup_opened");
+// });
+//
+// infoPopupClose.addEventListener("click", function () {
+//   infoPopup.classList.toggle("popup_opened");
+// });
