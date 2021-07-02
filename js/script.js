@@ -12,7 +12,6 @@ infoPopupClose.addEventListener("click", function () {
 
 /* --------------FORM EDIT----------------------------- */
 const formElement = document.querySelector(".popup__form");
-
 const nameInput = document.querySelector(".popup__input-name");
 const jobInput = document.querySelector(".popup__input-about");
 const infoName = document.querySelector(".info__name");
@@ -40,3 +39,22 @@ saveBtn.addEventListener("click", function () {
 });
 
 formElement.addEventListener("submit", formSubmitHandler);
+
+/* ------------------------------------------- */
+
+
+/* --------------POPUP CARDS----------------------------- */
+const cardsPopupOpen = document.querySelector(".profile__add-btn");
+const cardsPopup = document.querySelector(".popup-cards");
+const cardsPopupClose = document.querySelector(".popup-cards__close-btn");
+
+cardsPopupOpen.addEventListener("click", function () {
+  console.log("ya");
+  cardsPopup.classList.add("popup_opened");
+});
+
+cardsPopupClose.addEventListener("click", function () {
+  cardsPopup.classList.remove("popup_opened");
+});
+
+/* ------------------------------------------- */
