@@ -38,8 +38,8 @@ formElement.addEventListener("submit", formSubmitHandler);
 
 /* --------------POPUP CARDS----------------------------- */
 const cardsPopupOpen = document.querySelector(".profile__add-btn");
-const cardsPopup = document.querySelector(".popup-cards");
 const cardsPopupClose = document.querySelector(".popup-cards__close-btn");
+const cardsPopup = document.querySelector(".popup-cards");
 
 cardsPopupOpen.addEventListener("click", function () {
   cardsPopup.classList.add("popup_opened");
@@ -77,9 +77,6 @@ const initialCards = [
   },
 ];
 
-const titleInput = document.querySelector(".popup__input-title"); // переменная названия картинки
-const linkInput = document.querySelector(".popup__input-link"); // переменная ссылки картинки
-
 // Просто добавляет карточку на страницу
 /*  const templateElement = document.querySelector(".template").content;
 const templateList = document.querySelector(".elements__list");
@@ -94,6 +91,10 @@ templateList.prepend(listElement);
 
 /* ---------------------------------------------------------------------------- */
 
+/*
+initialCards.forEach(function (item) {
+
+})
 function createCard(item) {
   const templateElement = document.querySelector(".template").content; //клонировать разметку
   const templateList = document.querySelector(".elements__list");
@@ -123,3 +124,69 @@ function addCard(item, listElement) {
 
   templateList.prepend(listElement); //добавляет ее в тот контейнер, ссылку на которую ты передаешь вторым аргументом
 }
+
+*/
+
+const formAddNewCard = cardsPopup.querySelector(".popup__form");
+
+const titleInput = document.querySelector(".popup__input-title"); // переменная названия картинки
+const linkInput = document.querySelector(".popup__input-link"); // переменная ссылки картинки
+
+/*Контейнер для добавления карточек*/
+const templateList = document.querySelector(".elements__list");
+const templateElement = document.querySelector(".template").content; //клонировать разметку
+
+function createCard(item) {
+  const listElement = templateElement
+    .querySelector(".elements__list-item")
+    .cloneNode(true);
+
+  const elementsPhoto = listElement.querySelector(".elements__list-photo");
+  const elementsDescription = listElement.querySelector(
+    ".elements__description"
+  );
+  // добавляем данные из аргумента
+  elementsPhoto.src = item.link;
+  elementsDescription.textContent = item.name;
+
+  //обработчик на лайк
+  listElement
+    .querySelector(".elements__like-btn")
+    .addEventListener("click", function (evt) {
+      evt.target.classList.toggle("elements__like-btn_active");
+    });
+
+  //обработчик на удаление карточки
+  listElement
+    .querySelector(".elements__button-delete")
+    .addEventListener("click", function (evt) {
+      console.log("yopta");
+      evt.target.closest(".elements__list-item").remove();
+    });
+
+  //обработчик на карточку для открытия картинки
+  return listElement; //вернул готовую карточку через return
+}
+
+// функция добавления карточку на страницу
+function addCard(item, container) {
+  const newCard = createCard(item);
+  container.prepend(newCard);
+}
+
+// Карточки из коробки
+initialCards.forEach(function (item) {
+  addCard(item, templateList);
+});
+
+/*Создание новой карточки*/
+function addForm(evt) {
+  evt.preventDefault();
+  addCard(
+    (item = { name: titleInput.value, link: linkInput.value }),
+    templateList
+  );
+  // );
+}
+
+formAddNewCard.addEventListener("submit", addForm);
