@@ -40,7 +40,6 @@
               <button class="elements__like-btn" type="button"></button>
             </div>
           </li>
-
           <li class="elements__list-item">
             <img
               src="./images/kirill-pershin-1404681-unsplash-1.jpg"
@@ -52,7 +51,6 @@
               <button class="elements__like-btn" type="button"></button>
             </div>
           </li>
-
           <li class="elements__list-item">
             <img
               src="./images/kirill-pershin-1556355-unsplash-1.jpg"
@@ -64,7 +62,6 @@
               <button class="elements__like-btn" type="button"></button>
             </div>
           </li>
-
           <li class="elements__list-item">
             <img
               src="./images/kirill-pershin-1404681-unsplash-1.jpg"
@@ -76,7 +73,6 @@
               <button class="elements__like-btn" type="button"></button>
             </div>
           </li>
-
           <li class="elements__list-item">
             <img
               src="./images/kirill-pershin-1556355-unsplash-1.jpg"
@@ -88,7 +84,6 @@
               <button class="elements__like-btn" type="button"></button>
             </div>
           </li>
-
           <li class="elements__list-item">
             <img
               src="./images/kirill-pershin-1088404-unsplash-1.jpg"
@@ -138,16 +133,21 @@
           <input
             type="text"
             name="name"
-            class="popup__input popup__input-name"
+            class="popup__input popup__input-title"
             placeholder="Название"
           />
           <input
             type="text"
             name="about"
-            class="popup__input popup__input-about"
+            class="popup__input popup__input-link"
             placeholder="Ссылка на картинку"
           />
-          <button class="popup__save-btn" type="submit">Создать</button>
+          <button
+            class="popup__save-btn popup__save-btn_add_card"
+            type="submit"
+          >
+            Создать
+          </button>
         </form>
         <button
           class="popup__close-btn popup-cards__close-btn"
@@ -158,6 +158,18 @@
         </button>
       </div>
     </section>
+
+    <template class="template">
+      <li class="elements__list-item">
+        <img src="#" alt="#" class="elements__list-photo" />
+
+        <button class="elements__button-delete" type="button"></button>
+        <div class="elements__description-wrapper">
+          <h2 class="elements__description"></h2>
+          <button class="elements__like-btn" type="button"></button>
+        </div>
+      </li>
+    </template>
 
     <script src="js/script.js"></script>
   </body>
