@@ -1,0 +1,6 @@
+.popup_image {
+  /* display: flex; */
+  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+}

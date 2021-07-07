@@ -19,6 +19,14 @@ const infoDescription = document.querySelector(".info__description");
 
 const saveBtn = document.querySelector(".popup__save-btn");
 
+const saveBtnCard = document.querySelector(".popup__save-btn_add_card");
+
+const popup = document.querySelector(".popup");
+saveBtnCard.addEventListener("click", function () {
+  console.log("tt");
+  formAddNewCard.classList.remove("popup_opened");
+});
+
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 function formSubmitHandler(evt) {
@@ -31,14 +39,15 @@ function formSubmitHandler(evt) {
 }
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-saveBtn.addEventListener("click", function () {
-  formElement.classList.remove("popup__save-btn");
-});
+// saveBtn.addEventListener("click", function () {
+//   formElement.classList.remove("popup__save-btn");
+// });
 formElement.addEventListener("submit", formSubmitHandler);
 
 /* --------------POPUP CARDS----------------------------- */
 const cardsPopupOpen = document.querySelector(".profile__add-btn");
-const cardsPopupClose = document.querySelector(".popup-cards__close-btn");
+const cardsPopupClose = document.querySelector(".popup__close-btn_add_card");
+
 const cardsPopup = document.querySelector(".popup-cards");
 
 cardsPopupOpen.addEventListener("click", function () {
@@ -77,56 +86,6 @@ const initialCards = [
   },
 ];
 
-// Просто добавляет карточку на страницу
-/*  const templateElement = document.querySelector(".template").content;
-const templateList = document.querySelector(".elements__list");
-const listElement = templateElement
-  .querySelector(".elements__list-item")
-  .cloneNode(true);
-listElement.querySelector(".elements__list-photo").src =
-  "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg";
-listElement.querySelector(".elements__description").textContent = "Текст тут";
-templateList.prepend(listElement);
-*/
-
-/* ---------------------------------------------------------------------------- */
-
-/*
-initialCards.forEach(function (item) {
-
-})
-function createCard(item) {
-  const templateElement = document.querySelector(".template").content; //клонировать разметку
-  const templateList = document.querySelector(".elements__list");
-  const listElement = templateElement
-    .querySelector(".elements__list-item")
-    .cloneNode(true);
-
-  //добавить данные в нее из аргумента
-
-  listElement
-    .querySelector(".element__like-btn")
-    .addEventListener("click", function (evt) {
-      evt.target.classList.toggle("element__like-btn_active");
-    }); // добавить обработчик на кнопку лайка
-
-  // добавить обработчик на кнопку удаления
-  // добавить обработчик на карточку для открытия попапа
-
-  return item;
-}
-
-function addCard(item, listElement) {
-  // функция принимает два аргумента - данные карточки и ссылку на контейнер куда надо добавить карточку
-
-  // внутри себя создает карточку через createCard
-  // полученную карточку сохраняет в переменную
-
-  templateList.prepend(listElement); //добавляет ее в тот контейнер, ссылку на которую ты передаешь вторым аргументом
-}
-
-*/
-
 const formAddNewCard = cardsPopup.querySelector(".popup__form");
 
 const titleInput = document.querySelector(".popup__input-title"); // переменная названия картинки
@@ -135,6 +94,17 @@ const linkInput = document.querySelector(".popup__input-link"); // переме�
 /*Контейнер для добавления карточек*/
 const templateList = document.querySelector(".elements__list");
 const templateElement = document.querySelector(".template").content; //клонировать разметку
+
+/* ---------------------------------------------------------------------------- */
+// переменные для попапа открытия картинок
+const popupImg = document.querySelector(".popup_image");
+const image = document.querySelector(".popup_image-photo");
+const imageCaption = document.querySelector(".popup_image-caption");
+const imagePopupClose = document.querySelector(
+  ".popup__close-btn_image_fullsize"
+);
+
+/* ---------------------------------------------------------------------------- */
 
 function createCard(item) {
   const listElement = templateElement
@@ -165,6 +135,18 @@ function createCard(item) {
     });
 
   //обработчик на карточку для открытия картинки
+  elementsPhoto.addEventListener("click", function () {
+    console.log("open img");
+    image.src = item.link;
+    imageCaption.textContent = item.name;
+
+    popupImg.classList.add("popup_opened");
+
+    imagePopupClose.addEventListener("click", function () {
+      console.log("?");
+      popupImg.classList.remove("popup_opened");
+    });
+  });
   return listElement; //вернул готовую карточку через return
 }
 
@@ -186,7 +168,8 @@ function addForm(evt) {
     (item = { name: titleInput.value, link: linkInput.value }),
     templateList
   );
-  // );
+
+  cardsPopup.classList.toggle("popup_opened");
 }
 
 formAddNewCard.addEventListener("submit", addForm);
