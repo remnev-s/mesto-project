@@ -1,10 +1,10 @@
 # Проект: Место
 
-## Спринт 3 
+## Спринт 3
 
 (Яндекс – практикум)
 
-![github.com/remnev-s/russian-travel](images/readme-cover.jpg)
+![github.com/remnev-s/russian-travel](./src/images/readme-cover.jpg)
 
 ### Адаптивная страница, с использованием БЭМ, flex/grid.
 
