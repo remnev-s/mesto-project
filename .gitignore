@@ -4,7 +4,6 @@ Thumbs.db
 .nova/
 .cache
 
+node_modules
 dist
-*.json
 
-node_modules/
