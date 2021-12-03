@@ -1,6 +1,10 @@
 import './index.css';
 import { enableValidation } from '../components/validate.js';
-import { createCard, handlerCardFormSubmit } from '../components/card.js';
+import {
+  createCard,
+  handlerCardFormSubmit,
+  popupSaveBtn,
+} from '../components/card.js';
 import {
   openPopup,
   closePopup,
@@ -24,6 +28,7 @@ const jobInput = document.querySelector('.popup__input-about');
 const infoName = document.querySelector('.info__name');
 const infoDescription = document.querySelector('.info__description');
 const saveBtnCard = document.querySelector('.popup__save-btn_add_card'); // кнопка создать
+
 /* ---------------------------------------------------------------------------- */
 const titleInput = document.querySelector('.popup__input-title'); // переменная названия картинки
 const linkInput = document.querySelector('.popup__input-link'); // переменная ссылки картинки
@@ -34,8 +39,10 @@ function getFormSubmitHandler(evt) {
 
   infoName.textContent = nameInput.value;
   infoDescription.textContent = jobInput.value;
-  formElement.reset();
   closePopup(infoPopup);
+  formElement.reset();
+  popupSaveBtn.classList.add('popup__save-btn_inactive');
+  popupSaveBtn.setAttribute('disabled', true);
 }
 formElement.addEventListener('submit', getFormSubmitHandler);
 /* ---------------------------------------------------------------------------- */

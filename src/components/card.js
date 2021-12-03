@@ -1,4 +1,10 @@
-import { cardsPopup, infoPopup, openPopup, closePopup } from './modal.js';
+import {
+  cardsPopup,
+  infoPopup,
+  openPopup,
+  closePopup,
+  cardsPopupClose,
+} from './modal.js';
 
 // КОНТЕЙНЕР ДЛЯ ДОБАВЛЕНИЯ КАРТОЧЕК
 const templateList = document.querySelector('.elements__list');
@@ -10,6 +16,8 @@ const imageCaption = document.querySelector('.popup_image-caption');
 const popupImg = document.querySelector('.popup_image');
 const titleInput = document.querySelector('.popup__input-title'); // переменная названия картинки
 const linkInput = document.querySelector('.popup__input-link'); // переменная ссылки картинки
+const saveBtnCard = document.querySelector('.popup__save-btn_add_card');
+const popupSaveBtn = document.querySelector('.popup__save-btn');
 
 // КАРТОЧКИ ИЗ КОРОБКИ
 const initialCards = [
@@ -98,9 +106,11 @@ function handlerCardFormSubmit(evt, item) {
     (item = { name: titleInput.value, link: linkInput.value }),
     templateList
   );
-  formAddNewCard.reset();
   closePopup(cardsPopup);
+  formAddNewCard.reset();
+  saveBtnCard.classList.add('popup__save-btn_inactive');
+  saveBtnCard.setAttribute('disabled', true);
 }
 formAddNewCard.addEventListener('submit', handlerCardFormSubmit);
 
-export { createCard };
+export { createCard, popupSaveBtn };
