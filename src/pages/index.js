@@ -1,6 +1,6 @@
 import './index.css';
 import { enableValidation } from '../components/validate.js';
-import { createCard, cardFormSubmitHandler } from '../components/card.js';
+import { createCard, handlerCardFormSubmit } from '../components/card.js';
 import {
   openPopup,
   closePopup,
@@ -29,15 +29,15 @@ const titleInput = document.querySelector('.popup__input-title'); // перем�
 const linkInput = document.querySelector('.popup__input-link'); // переменная ссылки картинки
 
 // ФОРМА РЕДАКТИРОВАНИЯ ПРОФИЛЯ
-function formSubmitHandler(evt) {
+function getFormSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
 
   infoName.textContent = nameInput.value;
   infoDescription.textContent = jobInput.value;
-
+  formElement.reset();
   closePopup(infoPopup);
 }
-formElement.addEventListener('submit', formSubmitHandler);
+formElement.addEventListener('submit', getFormSubmitHandler);
 /* ---------------------------------------------------------------------------- */
 
 enableValidation({

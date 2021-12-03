@@ -92,15 +92,15 @@ initialCards.forEach(function (item) {
 });
 
 /*Создание новой карточки*/
-function cardFormSubmitHandler(evt, item) {
+function handlerCardFormSubmit(evt, item) {
   evt.preventDefault();
   addCard(
     (item = { name: titleInput.value, link: linkInput.value }),
     templateList
   );
-  document.querySelector('.popup__form').reset();
+  formAddNewCard.reset();
   closePopup(cardsPopup);
 }
-formAddNewCard.addEventListener('submit', cardFormSubmitHandler);
+formAddNewCard.addEventListener('submit', handlerCardFormSubmit);
 
-export { createCard, cardFormSubmitHandler };
+export { createCard };

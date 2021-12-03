@@ -1,4 +1,4 @@
-const popup = document.querySelectorAll('.popup');
+const popups = document.querySelectorAll('.popup');
 const infoEdit = document.querySelector('.info__edit-btn');
 const infoPopup = document.querySelector('.popup');
 const infoPopupClose = document.querySelector('.popup__close-btn');
@@ -8,32 +8,37 @@ const imagePopupClose = document.querySelector(
   '.popup__close-btn_image_fullsize'
 );
 const cardsPopup = document.querySelector('.popup-cards');
+const popupImg = document.querySelector('.popup_image');
 
 //ФУНКЦИЯ ОТКРЫТИЯ ПОПАПА
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
+
+function openPopup(popups) {
+  popups.classList.add('popup_opened');
+  window.addEventListener('keydown', closeByEscape);
 }
 // ФУНКЦИЯ ЗАРЫТИЯ ПОПАПА
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
+function closePopup(popups) {
+  popups.classList.remove('popup_opened');
+  window.removeEventListener('keydown', closeByEscape);
 }
 
-//Закрываем попапы на область вокруг попапа
-popup.forEach((item) => {
-  item.addEventListener('click', (evt) => {
+popups.forEach((item) => {
+  item.addEventListener('click', closeOverlayClick);
+});
+function closeOverlayClick(evt) {
+  if (evt.type === 'click') {
     if (evt.target === evt.currentTarget) {
-      item.classList.remove('popup_opened');
+      closePopup(evt.target);
     }
-  });
-});
-//Закрываем попапы на ESCATE
-popup.forEach((item) => {
-  document.addEventListener('keydown', (evt) => {
-    if (evt.code === 'Escape') {
-      item.classList.remove('popup_opened');
-    }
-  });
-});
+  }
+}
+
+function closeByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened'); //нашли открытый попап
+    closePopup(openedPopup); //закрыли попап
+  }
+}
 
 // ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА РЕДАКТИРОВАНИЯ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ
 infoEdit.addEventListener('click', function () {
@@ -42,8 +47,8 @@ infoEdit.addEventListener('click', function () {
 infoPopupClose.addEventListener('click', function () {
   closePopup(infoPopup);
 });
-/* ---------------------------------------------------------------------------- */
-
+// /* ---------------------------------------------------------------------------- */
+//
 // ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА ДОБАВЛЕНИЯ КАРТОЧЕК НА СТРАНИЦУ
 cardsPopupOpen.addEventListener('click', function () {
   openPopup(cardsPopup);
@@ -51,8 +56,9 @@ cardsPopupOpen.addEventListener('click', function () {
 cardsPopupClose.addEventListener('click', function () {
   closePopup(cardsPopup);
 });
-/* ---------------------------------------------------------------------------- */
-// ОБРАБОТЧИК ЗАКРЫТИЯ КАРТИНОК
+
+// /* ---------------------------------------------------------------------------- */
+// // ОБРАБОТЧИК ЗАКРЫТИЯ КАРТИНОК
 imagePopupClose.addEventListener('click', function () {
   closePopup(popupImg);
 });
@@ -60,12 +66,12 @@ imagePopupClose.addEventListener('click', function () {
 export {
   openPopup,
   closePopup,
-  popup,
+  infoPopup,
+  popups,
   infoEdit,
   infoPopupClose,
   cardsPopupOpen,
   cardsPopupClose,
   imagePopupClose,
   cardsPopup,
-  infoPopup,
 };
