@@ -10,6 +10,11 @@ const imagePopupClose = document.querySelector(
 const cardsPopup = document.querySelector('.popup-cards');
 const popupImg = document.querySelector('.popup_image');
 
+const nameInput = document.querySelector('.popup__input-name');
+const jobInput = document.querySelector('.popup__input-about');
+const infoName = document.querySelector('.info__name');
+const infoDescription = document.querySelector('.info__description');
+
 //ФУНКЦИЯ ОТКРЫТИЯ ПОПАПА
 
 function openPopup(popups) {
@@ -42,13 +47,14 @@ function closeByEscape(evt) {
 
 // ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА РЕДАКТИРОВАНИЯ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ
 infoEdit.addEventListener('click', function () {
+  nameInput.value = infoName.textContent;
+  jobInput.value = infoDescription.textContent;
   openPopup(infoPopup);
 });
 infoPopupClose.addEventListener('click', function () {
   closePopup(infoPopup);
 });
-// /* ---------------------------------------------------------------------------- */
-//
+
 // ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА ДОБАВЛЕНИЯ КАРТОЧЕК НА СТРАНИЦУ
 cardsPopupOpen.addEventListener('click', function () {
   openPopup(cardsPopup);
@@ -57,8 +63,7 @@ cardsPopupClose.addEventListener('click', function () {
   closePopup(cardsPopup);
 });
 
-// /* ---------------------------------------------------------------------------- */
-// // ОБРАБОТЧИК ЗАКРЫТИЯ КАРТИНОК
+// ОБРАБОТЧИК ЗАКРЫТИЯ КАРТИНОК
 imagePopupClose.addEventListener('click', function () {
   closePopup(popupImg);
 });
@@ -74,4 +79,8 @@ export {
   cardsPopupClose,
   imagePopupClose,
   cardsPopup,
+  nameInput,
+  jobInput,
+  infoName,
+  infoDescription,
 };
