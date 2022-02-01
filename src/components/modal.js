@@ -10,13 +10,16 @@ const imagePopupClose = document.querySelector(
 const cardsPopup = document.querySelector('.popup-cards');
 const popupImg = document.querySelector('.popup_image');
 
+const avatar = document.querySelector('.profile__avatar');
+const avatarPopup = document.querySelector('.popup_avatar');
+const avatarPopupClose = document.querySelector('.popup__close-btn_add_avatar');
+
 const nameInput = document.querySelector('.popup__input-name');
 const jobInput = document.querySelector('.popup__input-about');
 const infoName = document.querySelector('.info__name');
 const infoDescription = document.querySelector('.info__description');
 
 //ФУНКЦИЯ ОТКРЫТИЯ ПОПАПА
-
 function openPopup(popups) {
   popups.classList.add('popup_opened');
   window.addEventListener('keydown', closeByEscape);
@@ -45,6 +48,14 @@ function closeByEscape(evt) {
   }
 }
 
+//АВАТАР ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА
+avatar.addEventListener('click', () => {
+  console.log('click');
+  openPopup(avatarPopup);
+});
+avatarPopupClose.addEventListener('click', () => {
+  closePopup(avatarPopup);
+});
 // ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА РЕДАКТИРОВАНИЯ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ
 infoEdit.addEventListener('click', function () {
   nameInput.value = infoName.textContent;

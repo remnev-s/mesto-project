@@ -27,7 +27,6 @@ const popupImg = document.querySelector('.popup_image');
 
 // ПЕРЕМЕННЫ ДЛЯ ФОРМ
 const formElement = document.querySelector('.popup__form');
-
 const saveBtnCard = document.querySelector('.popup__save-btn_add_card'); // кнопка создать
 
 /* ---------------------------------------------------------------------------- */

@@ -4,6 +4,8 @@ import {
   openPopup,
   closePopup,
   cardsPopupClose,
+  popupAvatar,
+  avatar,
 } from './modal.js';
 
 // КОНТЕЙНЕР ДЛЯ ДОБАВЛЕНИЯ КАРТОЧЕК

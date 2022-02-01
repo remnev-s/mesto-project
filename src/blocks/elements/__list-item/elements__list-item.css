@@ -1,7 +1,11 @@
 .elements__list-item {
   position: relative;
+  display: flex;
+  flex-direction: column;
+
   background-color: #fff;
   border-radius: 10px;
+
   /* white-space: nowrap; */
   /* overflow: hidden; */
   /* width: 282px; */
