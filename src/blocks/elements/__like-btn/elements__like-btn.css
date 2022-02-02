@@ -8,6 +8,8 @@
   width: 24px;
   height: 19px;
   padding: 10px;
+
+  justify-self: end;
 }
 
 .elements__like-btn:hover {
