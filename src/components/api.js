@@ -13,14 +13,14 @@ const getResponseData = (res) => {
 
 const getUserInfo = () => {
   return fetch(`${config.baseUrl}/users/me`, {
-    method: 'GET',
+    // method: 'GET',
     headers: config.headers,
   }).then(getResponseData);
 };
 
 const getCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
-    method: 'GET',
+    // method: 'GET',
     headers: config.headers,
   }).then(getResponseData);
 };
