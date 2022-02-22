@@ -1,12 +1,4 @@
-import {
-  cardsPopup,
-  infoPopup,
-  openPopup,
-  closePopup,
-  cardsPopupClose,
-  popupAvatar,
-  avatar,
-} from './modal.js';
+import { cardsPopup, openPopup, closePopup } from './modal.js';
 
 // КОНТЕЙНЕР ДЛЯ ДОБАВЛЕНИЯ КАРТОЧЕК
 const templateList = document.querySelector('.elements__list');
@@ -19,7 +11,6 @@ const popupImg = document.querySelector('.popup_image');
 const titleInput = document.querySelector('.popup__input-title'); // переменная названия картинки
 const linkInput = document.querySelector('.popup__input-link'); // переменная ссылки картинки
 const saveBtnCard = document.querySelector('.popup__save-btn_add_card');
-const popupSaveBtn = document.querySelector('.popup__save-btn');
 
 // КАРТОЧКИ ИЗ КОРОБКИ
 const initialCards = [
@@ -55,44 +46,40 @@ function createCard(item) {
   const listElement = templateElement
     .querySelector('.elements__list-item')
     .cloneNode(true);
-
   const elementsPhoto = listElement.querySelector('.elements__list-photo');
-  const elementsDescription = listElement.querySelector(
-    '.elements__description'
-  );
+
   // добавляем данные из аргумента
+  listElement.querySelector('.elements__description').textContent = item.name;
   elementsPhoto.src = item.link;
   elementsPhoto.alt = item.name;
-  elementsDescription.textContent = item.name;
 
   //обработчик на лайк
-  // listElement
-  //   .querySelector('.elements__like-btn')
-  //   .addEventListener('click', function (evt) {
-  //     evt.target.classList.toggle('elements__like-btn_active');
-  //   });
+  listElement
+    .querySelector('.elements__like-btn')
+    .addEventListener('click', (evt) => {
+      evt.target.classList.toggle('elements__like-btn_active');
+    });
 
   //обработчик на удаление карточки
   listElement
     .querySelector('.elements__button-delete')
-    .addEventListener('click', function (evt) {
+    .addEventListener('click', (evt) => {
       evt.target.closest('.elements__list-item').remove();
     });
 
   //обработчик на карточку для открытия картинки
-  //   elementsPhoto.addEventListener('click', function () {
-  //     image.src = item.link;
-  //     image.alt = item.name;
-  //     imageCaption.textContent = item.name;
-  //
-  //     openPopup(popupImg);
-  //   });
+  elementsPhoto.addEventListener('click', () => {
+    image.src = item.link;
+    image.alt = item.name;
+    imageCaption.textContent = item.name;
+
+    openPopup(popupImg);
+  });
   return listElement; //вернул готовую карточку через return
 }
 
 // функция добавления карточку на страницу
 function addCard(item, container) {
-  console.log(item);
   const newCard = createCard(item);
   container.prepend(newCard);
 }
@@ -103,7 +90,7 @@ initialCards.forEach(function (item) {
 });
 
 /*Создание новой карточки*/
-function handlerCardFormSubmit(evt, item) {
+const handlerCardFormSubmit = (evt, item) => {
   evt.preventDefault();
   addCard(
     (item = { name: titleInput.value, link: linkInput.value }),
@@ -113,7 +100,7 @@ function handlerCardFormSubmit(evt, item) {
   formAddNewCard.reset();
   saveBtnCard.classList.add('popup__save-btn_inactive');
   saveBtnCard.setAttribute('disabled', true);
-}
+};
 formAddNewCard.addEventListener('submit', handlerCardFormSubmit);
 
-export { createCard, popupSaveBtn };
+export { createCard };

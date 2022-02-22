@@ -1,53 +1,21 @@
 import './index.css';
 import { enableValidation } from '../components/validate.js';
-import {
-  createCard,
-  handlerCardFormSubmit,
-  popupSaveBtn,
-} from '../components/card.js';
-import {
-  openPopup,
-  closePopup,
-  popup,
-  infoEdit,
-  infoPopupClose,
-  cardsPopupOpen,
-  cardsPopupClose,
-  imagePopupClose,
-  cardsPopup,
-  infoPopup,
-  nameInput,
-  jobInput,
-  infoName,
-  infoDescription,
-} from '../components/modal.js';
-
-// ПЕРЕМЕННЫЕ ДЛЯ ПОПАПА ОТКРЫТИЯ КАРТИНОК
-const popupImg = document.querySelector('.popup_image');
-
-// ПЕРЕМЕННЫ ДЛЯ ФОРМ
-const formElement = document.querySelector('.popup__form');
-const saveBtnCard = document.querySelector('.popup__save-btn_add_card'); // кнопка создать
+import { createCard } from '../components/card.js';
 
 /* ---------------------------------------------------------------------------- */
-const titleInput = document.querySelector('.popup__input-title'); // переменная названия картинки
-const linkInput = document.querySelector('.popup__input-link'); // переменная ссылки картинки
+import { getUserInfo, getCards } from '../components/api.js';
 
-// ФОРМА РЕДАКТИРОВАНИЯ ПРОФИЛЯ
-function getFormSubmitHandler(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+const getAppInfo = () => {
+  return Promise.all([getUserInfo(), getCards()]);
+};
 
-  infoName.textContent = nameInput.value;
-  infoDescription.textContent = jobInput.value;
+getAppInfo()
+  .then(([getUserInfo, getCards]) => {
+    // Теперь у нас одновременно есть данные ответов user и cards
+  })
+  .catch((err) => console.log(err));
 
-  closePopup(infoPopup);
-  formElement.reset();
-  popupSaveBtn.classList.add('popup__save-btn_inactive');
-  popupSaveBtn.setAttribute('disabled', true);
-}
-formElement.addEventListener('submit', getFormSubmitHandler);
-/* ---------------------------------------------------------------------------- */
-
+// Promise.all([getUserInfo(), getCards()]);
 enableValidation({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',

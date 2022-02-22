@@ -19,34 +19,38 @@ const jobInput = document.querySelector('.popup__input-about');
 const infoName = document.querySelector('.info__name');
 const infoDescription = document.querySelector('.info__description');
 
+const popupSaveBtn = document.querySelector('.popup__save-btn');
+const formElement = document.querySelector('.popup__form');
+
 //ФУНКЦИЯ ОТКРЫТИЯ ПОПАПА
-function openPopup(popups) {
+const openPopup = (popups) => {
   popups.classList.add('popup_opened');
   window.addEventListener('keydown', closeByEscape);
-}
+};
 // ФУНКЦИЯ ЗАРЫТИЯ ПОПАПА
-function closePopup(popups) {
+const closePopup = (popups) => {
   popups.classList.remove('popup_opened');
   window.removeEventListener('keydown', closeByEscape);
-}
+};
 
-popups.forEach((item) => {
-  item.addEventListener('click', closeOverlayClick);
-});
-function closeOverlayClick(evt) {
+const closeOverlayClick = (evt) => {
   if (evt.type === 'click') {
     if (evt.target === evt.currentTarget) {
       closePopup(evt.target);
     }
   }
-}
+};
 
-function closeByEscape(evt) {
+const closeByEscape = (evt) => {
   if (evt.key === 'Escape') {
     const openedPopup = document.querySelector('.popup_opened'); //нашли открытый попап
     closePopup(openedPopup); //закрыли попап
   }
-}
+};
+
+popups.forEach((item) => {
+  item.addEventListener('click', closeOverlayClick);
+});
 
 //АВАТАР ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА
 avatar.addEventListener('click', () => {
@@ -55,27 +59,43 @@ avatar.addEventListener('click', () => {
 avatarPopupClose.addEventListener('click', () => {
   closePopup(avatarPopup);
 });
-// ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА РЕДАКТИРОВАНИЯ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ
-infoEdit.addEventListener('click', function () {
-  nameInput.value = infoName.textContent;
-  jobInput.value = infoDescription.textContent;
-  openPopup(infoPopup);
-});
-infoPopupClose.addEventListener('click', function () {
-  closePopup(infoPopup);
-});
 
 // ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА ДОБАВЛЕНИЯ КАРТОЧЕК НА СТРАНИЦУ
-cardsPopupOpen.addEventListener('click', function () {
+cardsPopupOpen.addEventListener('click', () => {
   openPopup(cardsPopup);
 });
-cardsPopupClose.addEventListener('click', function () {
+cardsPopupClose.addEventListener('click', () => {
   closePopup(cardsPopup);
 });
 
 // ОБРАБОТЧИК ЗАКРЫТИЯ КАРТИНОК
-imagePopupClose.addEventListener('click', function () {
+imagePopupClose.addEventListener('click', () => {
   closePopup(popupImg);
+});
+
+// ФОРМА РЕДАКТИРОВАНИЯ ПРОФИЛЯ
+const getFormSubmitHandler = (evt) => {
+  evt.preventDefault();
+
+  infoName.textContent = nameInput.value;
+  infoDescription.textContent = jobInput.value;
+
+  closePopup(infoPopup);
+  formElement.reset();
+  popupSaveBtn.classList.add('popup__save-btn_inactive');
+  popupSaveBtn.setAttribute('disabled', true);
+};
+formElement.addEventListener('submit', getFormSubmitHandler);
+
+// ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА РЕДАКТИРОВАНИЯ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ
+infoEdit.addEventListener('click', () => {
+  nameInput.value = infoName.textContent;
+  jobInput.value = infoDescription.textContent;
+  openPopup(infoPopup);
+});
+
+infoPopupClose.addEventListener('click', () => {
+  closePopup(infoPopup);
 });
 
 export {

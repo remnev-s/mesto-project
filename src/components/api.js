@@ -1,3 +1,4 @@
+console.log('API');
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-6/',
   headers: {
@@ -6,14 +7,22 @@ const config = {
   },
 };
 
-export const setSomeData = (data) => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: 'POST',
-    headers: config.headers,
-    body: JSON.stringify(data),
-  }).then((res) => getResponseData(res));
-};
-
 const getResponseData = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 };
+
+const getUserInfo = () => {
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: 'GET',
+    headers: config.headers,
+  }).then(getResponseData);
+};
+
+const getCards = () => {
+  return fetch(`${config.baseUrl}/cards`, {
+    method: 'GET',
+    headers: config.headers,
+  }).then(getResponseData);
+};
+
+export { getUserInfo, getCards };
