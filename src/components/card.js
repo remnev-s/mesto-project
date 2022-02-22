@@ -66,11 +66,11 @@ function createCard(item) {
   elementsDescription.textContent = item.name;
 
   //обработчик на лайк
-  listElement
-    .querySelector('.elements__like-btn')
-    .addEventListener('click', function (evt) {
-      evt.target.classList.toggle('elements__like-btn_active');
-    });
+  // listElement
+  //   .querySelector('.elements__like-btn')
+  //   .addEventListener('click', function (evt) {
+  //     evt.target.classList.toggle('elements__like-btn_active');
+  //   });
 
   //обработчик на удаление карточки
   listElement
@@ -80,18 +80,19 @@ function createCard(item) {
     });
 
   //обработчик на карточку для открытия картинки
-  elementsPhoto.addEventListener('click', function () {
-    image.src = item.link;
-    image.alt = item.name;
-    imageCaption.textContent = item.name;
-
-    openPopup(popupImg);
-  });
+  //   elementsPhoto.addEventListener('click', function () {
+  //     image.src = item.link;
+  //     image.alt = item.name;
+  //     imageCaption.textContent = item.name;
+  //
+  //     openPopup(popupImg);
+  //   });
   return listElement; //вернул готовую карточку через return
 }
 
 // функция добавления карточку на страницу
 function addCard(item, container) {
+  console.log(item);
   const newCard = createCard(item);
   container.prepend(newCard);
 }

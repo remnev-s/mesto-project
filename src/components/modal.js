@@ -50,7 +50,6 @@ function closeByEscape(evt) {
 
 //АВАТАР ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА
 avatar.addEventListener('click', () => {
-  console.log('click');
   openPopup(avatarPopup);
 });
 avatarPopupClose.addEventListener('click', () => {
