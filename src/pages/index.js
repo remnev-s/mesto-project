@@ -22,7 +22,7 @@ getAppInfo()
       const newCard = createCard({ name, link, likes, cardId, ownerId });
 
       addCard(newCard, templateList);
-      console.log(addCard);
+      // console.log(addCard);
     });
   })
   .catch((err) => console.log(err));

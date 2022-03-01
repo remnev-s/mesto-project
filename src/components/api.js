@@ -1,4 +1,3 @@
-console.log('API');
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-6/',
   headers: {
@@ -9,6 +8,10 @@ const config = {
 
 const getResponseData = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+};
+
+const errorHandler = (err) => {
+  console.log(err);
 };
 
 const getUserInfo = () => {
@@ -25,4 +28,23 @@ const getCards = () => {
   }).then(getResponseData);
 };
 
-export { getUserInfo, getCards };
+const updateImage = (newAvatar) => {
+  return (
+    fetch(`${config.baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: config.headers,
+      body: JSON.stringify({
+        avatar: newAvatar,
+      }),
+    })
+      // }).then(getResponseData);
+      .then((res) => {
+        if (res.ok) {
+          return newAvatar;
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+  );
+};
+
+export { getUserInfo, getCards, updateImage, errorHandler };

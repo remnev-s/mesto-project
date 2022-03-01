@@ -13,36 +13,6 @@ const titleInput = document.querySelector('.popup__input-title'); // перем�
 const linkInput = document.querySelector('.popup__input-link'); // переменная ссылки картинки
 const saveBtnCard = document.querySelector('.popup__save-btn_add_card');
 
-// КАРТОЧКИ ИЗ КОРОБКИ
-// const initialCards = [
-//   {
-//     name: 'Сочи',
-//     link: 'https://images.unsplash.com/photo-1631603296585-8e7e9a7a8f7e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80',
-//   },
-//   {
-//     name: 'Офис',
-//     link: 'https://images.unsplash.com/photo-1631607359300-59830a31c76c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80',
-//   },
-//   {
-//     name: 'Дача',
-//     link: 'https://images.unsplash.com/photo-1632112539492-203b5002ff05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1664&q=80',
-//   },
-//   {
-//     name: 'Капотня',
-//     link: 'https://images.unsplash.com/photo-1544380904-c686aad2fc40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80',
-//   },
-//   {
-//     name: 'На райончике',
-//     link: 'https://images.unsplash.com/photo-1516144935500-ecacf0e53552?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1784&q=80',
-//   },
-//   {
-//     name: 'Холмогорский район',
-//     link: 'https://images.unsplash.com/photo-1635243541748-ec8ed7063ccc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
-//   },
-// ];
-
-/* ---------------------------------------------------------------------------- */
-
 const createCard = ({ name, link, likes, cardId, ownerId }) => {
   const listElement = templateElement
     .querySelector('.elements__list-item')
@@ -93,7 +63,7 @@ const addCard = (newCard, container) => {
 //   addCard(item, templateList);
 // });
 
-/*Создание новой карточки*/
+/*СОЗДАНИЕ НОВОЙ КАРТОЧКИ*/
 const handlerCardFormSubmit = (evt, item) => {
   evt.preventDefault();
   // addCard(

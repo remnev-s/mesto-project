@@ -1,3 +1,4 @@
+import { updateImage, errorHandler } from './api.js';
 const popups = document.querySelectorAll('.popup');
 const infoEdit = document.querySelector('.info__edit-btn');
 const infoPopup = document.querySelector('.popup');
@@ -52,14 +53,6 @@ popups.forEach((item) => {
   item.addEventListener('click', closeOverlayClick);
 });
 
-//АВАТАР ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА
-avatar.addEventListener('click', () => {
-  openPopup(avatarPopup);
-});
-avatarPopupClose.addEventListener('click', () => {
-  closePopup(avatarPopup);
-});
-
 // ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА ДОБАВЛЕНИЯ КАРТОЧЕК НА СТРАНИЦУ
 cardsPopupOpen.addEventListener('click', () => {
   openPopup(cardsPopup);
@@ -97,6 +90,35 @@ infoEdit.addEventListener('click', () => {
 infoPopupClose.addEventListener('click', () => {
   closePopup(infoPopup);
 });
+
+const formPopupAvatar = document.querySelector('.popup__form-avatar');
+const popupInputAvatar = document.querySelector('.popup__input-avatar');
+const avatarImage = document.querySelector('.profile__avatar-img');
+const popupSubmitAvatar = document.querySelector('.popup__submit-avatar');
+//АВАТАР ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА
+avatar.addEventListener('click', () => {
+  openPopup(avatarPopup);
+});
+avatarPopupClose.addEventListener('click', () => {
+  closePopup(avatarPopup);
+});
+
+//АВАТАР
+const getFormSubmit = (evt) => {
+  evt.preventDefault();
+
+  updateImage(popupInputAvatar.value)
+    .then((newAvatar) => {
+      avatarImage.src = newAvatar;
+      closePopup(avatarPopup);
+      formPopupAvatar.reset();
+      popupSubmitAvatar.classList.add('popup__save-btn_inactive');
+      popupSubmitAvatar.setAttribute('disabled', true);
+    })
+    .catch(errorHandler);
+};
+
+formPopupAvatar.addEventListener('submit', getFormSubmit);
 
 export {
   openPopup,
