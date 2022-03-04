@@ -1,4 +1,4 @@
-import { updateImage, errorHandler } from './api.js';
+import { updateImage, errorHandler, changeUserData } from './api.js';
 const popups = document.querySelectorAll('.popup');
 const infoEdit = document.querySelector('.info__edit-btn');
 const infoPopup = document.querySelector('.popup');
@@ -15,10 +15,10 @@ const avatar = document.querySelector('.profile__avatar');
 const avatarPopup = document.querySelector('.popup_avatar');
 const avatarPopupClose = document.querySelector('.popup__close-btn_add_avatar');
 
-const nameInput = document.querySelector('.popup__input-name');
-const jobInput = document.querySelector('.popup__input-about');
-const infoName = document.querySelector('.info__name');
-const infoDescription = document.querySelector('.info__description');
+// const nameInput = document.querySelector('.popup__input-name');
+// const jobInput = document.querySelector('.popup__input-about');
+// const infoName = document.querySelector('.info__name');
+// const infoDescription = document.querySelector('.info__description');
 
 const popupSaveBtn = document.querySelector('.popup__save-btn');
 const formElement = document.querySelector('.popup__form');
@@ -65,20 +65,37 @@ cardsPopupClose.addEventListener('click', () => {
 imagePopupClose.addEventListener('click', () => {
   closePopup(popupImg);
 });
+/* -------------------------------------------------- */
+const nameInput = document.querySelector('.popup__input-name');
+const jobInput = document.querySelector('.popup__input-about');
 
-// ФОРМА РЕДАКТИРОВАНИЯ ПРОФИЛЯ
+const infoName = document.querySelector('.info__name');
+const infoDescription = document.querySelector('.info__description');
+// ФОРМА РЕДАКТИРОВАНИЯ ПРОФИЛЯ — ИМЯ И ДЕЯТЕЛЬНОСТЬ
+const formPopupProfile = document.querySelector('.popup__form-prodile');
 const getFormSubmitHandler = (evt) => {
   evt.preventDefault();
+  // infoName.textContent = nameInput.value;
+  // infoDescription.textContent = jobInput.value;
 
-  infoName.textContent = nameInput.value;
-  infoDescription.textContent = jobInput.value;
+  const newUserInfo = {
+    name: nameInput.value,
+    about: jobInput.value,
+  };
 
-  closePopup(infoPopup);
-  formElement.reset();
-  popupSaveBtn.classList.add('popup__save-btn_inactive');
-  popupSaveBtn.setAttribute('disabled', true);
+  changeUserData(newUserInfo)
+    .then((newUserInfo) => {
+      infoName.textContent = newUserInfo.name;
+      infoDescription.textContent = newUserInfo.about;
+      closePopup(infoPopup);
+      formElement.reset();
+      popupSaveBtn.classList.add('popup__save-btn_inactive');
+      popupSaveBtn.setAttribute('disabled', true);
+    })
+
+    .catch(errorHandler);
 };
-formElement.addEventListener('submit', getFormSubmitHandler);
+formPopupProfile.addEventListener('submit', getFormSubmitHandler);
 
 // ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА РЕДАКТИРОВАНИЯ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ
 infoEdit.addEventListener('click', () => {
@@ -91,10 +108,12 @@ infoPopupClose.addEventListener('click', () => {
   closePopup(infoPopup);
 });
 
+/* -------------------------------------------------- */
+
 const formPopupAvatar = document.querySelector('.popup__form-avatar');
 const popupInputAvatar = document.querySelector('.popup__input-avatar');
 const avatarImage = document.querySelector('.profile__avatar-img');
-const popupSubmitAvatar = document.querySelector('.popup__submit-avatar');
+// const popupSubmitAvatar = document.querySelector('.popup__submit-avatar');
 //АВАТАР ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА
 avatar.addEventListener('click', () => {
   openPopup(avatarPopup);
@@ -135,4 +154,5 @@ export {
   jobInput,
   infoName,
   infoDescription,
+  avatarImage,
 };

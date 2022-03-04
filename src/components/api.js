@@ -6,8 +6,16 @@ const config = {
   },
 };
 
+// const getResponseData = (res) => {
+//   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+// };
+
 const getResponseData = (res) => {
-  return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+  if (res.ok) {
+    return res.json();
+  }
+
+  return Promise.reject(`Ошибка ${res.status}`);
 };
 
 const errorHandler = (err) => {
@@ -18,7 +26,8 @@ const getUserInfo = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     // method: 'GET',
     headers: config.headers,
-  }).then(getResponseData);
+    // }).then(getResponseData);
+  }).then((res) => getResponseData(res));
 };
 
 const getCards = () => {
@@ -28,6 +37,7 @@ const getCards = () => {
   }).then(getResponseData);
 };
 
+// АВАТАР
 const updateImage = (newAvatar) => {
   return (
     fetch(`${config.baseUrl}/users/me/avatar`, {
@@ -47,4 +57,21 @@ const updateImage = (newAvatar) => {
   );
 };
 
-export { getUserInfo, getCards, updateImage, errorHandler };
+/* Отправка атрибутов 'name' и 'about' для изменения данных пользователя */
+const changeUserData = (newUserInfo) => {
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: newUserInfo.name,
+      about: newUserInfo.about,
+    }),
+    // }).then(getResponseData);
+  }).then((res) => {
+    if (res.ok) {
+      return newUserInfo;
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
+};
+export { getUserInfo, getCards, updateImage, errorHandler, changeUserData };

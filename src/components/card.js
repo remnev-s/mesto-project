@@ -1,5 +1,6 @@
 import { cardsPopup, openPopup, closePopup } from './modal.js';
-import { getUserInfo, getCards } from '../components/api.js';
+import { getUserInfo, getCards } from './api.js';
+import { userId } from '../pages/index.js';
 
 // КОНТЕЙНЕР ДЛЯ ДОБАВЛЕНИЯ КАРТОЧЕК
 const templateList = document.querySelector('.elements__list');

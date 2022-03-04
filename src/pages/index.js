@@ -1,6 +1,7 @@
 import './index.css';
 import { enableValidation } from '../components/validate.js';
 import { createCard, addCard, templateList } from '../components/card.js';
+import { infoName, infoDescription, avatarImage } from '../components/modal.js';
 
 /* ---------------------------------------------------------------------------- */
 import { getUserInfo, getCards } from '../components/api.js';
@@ -9,8 +10,15 @@ const getAppInfo = () => {
   return Promise.all([getUserInfo(), getCards()]);
 };
 
+export let userId;
 getAppInfo()
   .then(([getUserInfo, getCards]) => {
+    infoName.textContent = getUserInfo.name;
+    infoDescription.textContent = getUserInfo.about;
+    avatarImage.alt = getUserInfo.name;
+    avatarImage.src = getUserInfo.avatar;
+    userId = getUserInfo._id;
+
     getCards.forEach((item) => {
       const {
         name,
