@@ -37,6 +37,18 @@ const getCards = () => {
   }).then(getResponseData);
 };
 
+// КАРТОЧКА
+const addCard = (newCard) => {
+  return fetch(`${config.baseUrl}/cards`, {
+    method: 'POST',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: newCard.name,
+      link: newCard.link,
+    }),
+  }).then(getResponseData);
+};
+
 // АВАТАР
 const updateImage = (newAvatar) => {
   return (
@@ -57,7 +69,7 @@ const updateImage = (newAvatar) => {
   );
 };
 
-/* Отправка атрибутов 'name' и 'about' для изменения данных пользователя */
+/* ДАННЫЕ ПОЛЬЗОВАТЕЛЯ */
 const changeUserData = (newUserInfo) => {
   return fetch(`${config.baseUrl}/users/me`, {
     method: 'PATCH',
@@ -74,4 +86,11 @@ const changeUserData = (newUserInfo) => {
     return Promise.reject(`Ошибка: ${res.status}`);
   });
 };
-export { getUserInfo, getCards, updateImage, errorHandler, changeUserData };
+export {
+  getUserInfo,
+  getCards,
+  updateImage,
+  errorHandler,
+  changeUserData,
+  addCard,
+};

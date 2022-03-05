@@ -1,6 +1,6 @@
 import './index.css';
 import { enableValidation } from '../components/validate.js';
-import { createCard, addCard, templateList } from '../components/card.js';
+import { createCard, renderCard, templateList } from '../components/card.js';
 import { infoName, infoDescription, avatarImage } from '../components/modal.js';
 
 /* ---------------------------------------------------------------------------- */
@@ -29,7 +29,8 @@ getAppInfo()
       } = item;
       const newCard = createCard({ name, link, likes, cardId, ownerId });
 
-      addCard(newCard, templateList);
+      // addCard(newCard, templateList);
+      renderCard(newCard, templateList);
       // console.log(addCard);
     });
   })

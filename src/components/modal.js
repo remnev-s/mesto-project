@@ -71,8 +71,9 @@ const jobInput = document.querySelector('.popup__input-about');
 
 const infoName = document.querySelector('.info__name');
 const infoDescription = document.querySelector('.info__description');
+
 // ФОРМА РЕДАКТИРОВАНИЯ ПРОФИЛЯ — ИМЯ И ДЕЯТЕЛЬНОСТЬ
-const formPopupProfile = document.querySelector('.popup__form-prodile');
+const formPopupProfile = document.querySelector('.popup__form-profile');
 const getFormSubmitHandler = (evt) => {
   evt.preventDefault();
   // infoName.textContent = nameInput.value;
@@ -108,12 +109,11 @@ infoPopupClose.addEventListener('click', () => {
   closePopup(infoPopup);
 });
 
-/* -------------------------------------------------- */
-
+/* ——————————————————————————————————————————————————————————— */
+/* ——————————————————————————————————————————————————————————— */
 const formPopupAvatar = document.querySelector('.popup__form-avatar');
 const popupInputAvatar = document.querySelector('.popup__input-avatar');
 const avatarImage = document.querySelector('.profile__avatar-img');
-// const popupSubmitAvatar = document.querySelector('.popup__submit-avatar');
 //АВАТАР ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА
 avatar.addEventListener('click', () => {
   openPopup(avatarPopup);
@@ -125,7 +125,6 @@ avatarPopupClose.addEventListener('click', () => {
 //АВАТАР
 const getFormSubmit = (evt) => {
   evt.preventDefault();
-
   updateImage(popupInputAvatar.value)
     .then((newAvatar) => {
       avatarImage.src = newAvatar;
@@ -136,7 +135,6 @@ const getFormSubmit = (evt) => {
     })
     .catch(errorHandler);
 };
-
 formPopupAvatar.addEventListener('submit', getFormSubmit);
 
 export {
