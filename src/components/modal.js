@@ -1,10 +1,14 @@
 import { updateImage, errorHandler, changeUserData } from './api.js';
+import { deletePost } from './card.js';
 const popups = document.querySelectorAll('.popup');
-const infoEdit = document.querySelector('.info__edit-btn');
-const infoPopup = document.querySelector('.popup');
 const infoPopupClose = document.querySelector('.popup__close-btn');
+const infoPopup = document.querySelector('.popup');
+
 const cardsPopupOpen = document.querySelector('.profile__add-btn');
 const cardsPopupClose = document.querySelector('.popup__close-btn_add_card');
+const cardsPopupDelete = document.querySelector(
+  '.popup__close-btn_delete_card'
+);
 const imagePopupClose = document.querySelector(
   '.popup__close-btn_image_fullsize'
 );
@@ -22,6 +26,10 @@ const avatarPopupClose = document.querySelector('.popup__close-btn_add_avatar');
 
 const popupSaveBtn = document.querySelector('.popup__save-btn');
 const formElement = document.querySelector('.popup__form');
+
+const changeTextSubmit = (buttonElement, text) => {
+  buttonElement.textContent = text;
+};
 
 //ФУНКЦИЯ ОТКРЫТИЯ ПОПАПА
 const openPopup = (popups) => {
@@ -74,16 +82,14 @@ const infoDescription = document.querySelector('.info__description');
 
 // ФОРМА РЕДАКТИРОВАНИЯ ПРОФИЛЯ — ИМЯ И ДЕЯТЕЛЬНОСТЬ
 const formPopupProfile = document.querySelector('.popup__form-profile');
-const getFormSubmitHandler = (evt) => {
+const popupSubmitProfile = formPopupProfile.querySelector('.popup__submit');
+const submitChangeUserInfo = (evt) => {
   evt.preventDefault();
-  // infoName.textContent = nameInput.value;
-  // infoDescription.textContent = jobInput.value;
-
+  changeTextSubmit(popupSubmitProfile, 'Сохранение...');
   const newUserInfo = {
     name: nameInput.value,
     about: jobInput.value,
   };
-
   changeUserData(newUserInfo)
     .then((newUserInfo) => {
       infoName.textContent = newUserInfo.name;
@@ -93,13 +99,17 @@ const getFormSubmitHandler = (evt) => {
       popupSaveBtn.classList.add('popup__save-btn_inactive');
       popupSaveBtn.setAttribute('disabled', true);
     })
-
-    .catch(errorHandler);
+    .catch(errorHandler)
+    .finally(() => {
+      changeTextSubmit(popupSubmitProfile, 'Сохранить');
+    });
 };
-formPopupProfile.addEventListener('submit', getFormSubmitHandler);
+formPopupProfile.addEventListener('submit', submitChangeUserInfo);
+/* ———————————————————————————————————————————————————————————————————————— */
 
 // ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА РЕДАКТИРОВАНИЯ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ
-infoEdit.addEventListener('click', () => {
+const infoUserEdit = document.querySelector('.info__edit-btn');
+infoUserEdit.addEventListener('click', () => {
   nameInput.value = infoName.textContent;
   jobInput.value = infoDescription.textContent;
   openPopup(infoPopup);
@@ -109,7 +119,6 @@ infoPopupClose.addEventListener('click', () => {
   closePopup(infoPopup);
 });
 
-/* ——————————————————————————————————————————————————————————— */
 /* ——————————————————————————————————————————————————————————— */
 const formPopupAvatar = document.querySelector('.popup__form-avatar');
 const popupInputAvatar = document.querySelector('.popup__input-avatar');
@@ -123,7 +132,7 @@ avatarPopupClose.addEventListener('click', () => {
 });
 
 //АВАТАР
-const getFormSubmit = (evt) => {
+const submitAvatar = (evt) => {
   evt.preventDefault();
   updateImage(popupInputAvatar.value)
     .then((newAvatar) => {
@@ -135,22 +144,47 @@ const getFormSubmit = (evt) => {
     })
     .catch(errorHandler);
 };
-formPopupAvatar.addEventListener('submit', getFormSubmit);
+formPopupAvatar.addEventListener('submit', submitAvatar);
+
+let dataForPopup;
+const saveDataForPopup = (data) => {
+  dataForPopup = data;
+};
+
+const formDeleteCard = document.querySelector('.popup__form-delete-card');
+const popupSubmitAvatar = formDeleteCard.querySelector('.popup__submit');
+const popupDeleteCard = document.querySelector('.popup_delete-card');
+cardsPopupDelete.addEventListener('click', () => {
+  closePopup(popupDeleteCard);
+});
+
+const submitFormDeleteCard = (evt) => {
+  evt.preventDefault();
+  changeTextSubmit(popupSubmitAvatar, 'Удаление...');
+  deletePost(dataForPopup)
+    .then(() => {
+      closePopup(popupDeleteCard);
+    })
+    .catch(errorHandler)
+    .finally(() => {
+      changeTextSubmit(popupSubmitAvatar, 'Да');
+    });
+};
+
+popupDeleteCard.addEventListener('submit', submitFormDeleteCard);
 
 export {
+  //modal.js
   openPopup,
   closePopup,
   infoPopup,
-  popups,
-  infoEdit,
-  infoPopupClose,
-  cardsPopupOpen,
-  cardsPopupClose,
-  imagePopupClose,
   cardsPopup,
-  nameInput,
-  jobInput,
+  popupDeleteCard,
+  //
+  //index.js
   infoName,
   infoDescription,
   avatarImage,
+  //
+  saveDataForPopup,
 };

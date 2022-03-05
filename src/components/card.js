@@ -1,5 +1,17 @@
-import { cardsPopup, openPopup, closePopup } from './modal.js';
-import { getUserInfo, getCards, addCard, errorHandler } from './api.js';
+import {
+  cardsPopup,
+  openPopup,
+  closePopup,
+  popupDeleteCard,
+  saveDataForPopup,
+} from './modal.js';
+import {
+  getUserInfo,
+  getCards,
+  addCard,
+  errorHandler,
+  deleteCard,
+} from './api.js';
 
 import { userId } from '../pages/index.js';
 
@@ -21,6 +33,7 @@ const createCard = ({ name, link, likes, cardId, ownerId }) => {
     .querySelector('.elements__list-item')
     .cloneNode(true);
   const elementsPhoto = listElement.querySelector('.elements__list-photo');
+
   listElement.id = cardId;
   // добавляем данные из аргумента
   listElement.querySelector('.elements__description').textContent = name;
@@ -45,11 +58,14 @@ const createCard = ({ name, link, likes, cardId, ownerId }) => {
   //   });
 
   //обработчик на удаление карточки
-  // listElement
-  //   .querySelector('.elements__button-delete')
-  //   .addEventListener('click', (evt) => {
-  //     evt.target.closest('.elements__list-item').remove();
-  //   });
+  if (ownerId === userId) {
+    const deleteButton = listElement.querySelector('.elements__button-delete');
+    deleteButton.classList.add('elements__button_inactive');
+    deleteButton.addEventListener('click', (evt) => {
+      openPopup(popupDeleteCard);
+      saveDataForPopup(evt);
+    });
+  }
 
   //ОБРАБОТЧИК НА КАРТОЧКУ ДЛЯ ОТКРЫТИЯ КАРТИНКИ
   elementsPhoto.addEventListener('click', () => {
@@ -65,8 +81,16 @@ const renderCard = (newCard, container) => {
   container.prepend(newCard);
 };
 
+const deletePost = (evt) => {
+  const deletePost = evt.target.closest('.elements__list-item');
+
+  return deleteCard(deletePost.id).then(() => {
+    deletePost.remove();
+  });
+};
+
 /*СОЗДАНИЕ НОВОЙ КАРТОЧКИ*/
-const handlerCardFormSubmit = (evt) => {
+const submitNewCard = (evt) => {
   evt.preventDefault();
 
   const newCard = {
@@ -92,6 +116,6 @@ const handlerCardFormSubmit = (evt) => {
     })
     .catch(errorHandler);
 };
-formAddNewCard.addEventListener('submit', handlerCardFormSubmit);
+formAddNewCard.addEventListener('submit', submitNewCard);
 
-export { createCard, renderCard, templateList };
+export { createCard, renderCard, templateList, deletePost };

@@ -49,6 +49,14 @@ const addCard = (newCard) => {
   }).then(getResponseData);
 };
 
+// УДАЛЕНИЕ КАРТОЧКИ
+const deleteCard = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+    method: 'DELETE',
+    headers: config.headers,
+  }).then(getResponseData);
+};
+
 // АВАТАР
 const updateImage = (newAvatar) => {
   return (
@@ -93,4 +101,5 @@ export {
   errorHandler,
   changeUserData,
   addCard,
+  deleteCard,
 };
