@@ -94,6 +94,23 @@ const changeUserData = (newUserInfo) => {
     return Promise.reject(`Ошибка: ${res.status}`);
   });
 };
+
+/* ДОБАВЛЕНИЕ ЛАЙКА */
+const putLikeCard = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: 'PUT',
+    headers: config.headers,
+  }).then(getResponseData);
+};
+
+/* УДАЛЕНИЕ ЛАЙКА */
+const deleteLikeCard = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: 'DELETE',
+    headers: config.headers,
+  }).then(getResponseData);
+};
+
 export {
   getUserInfo,
   getCards,
@@ -102,4 +119,7 @@ export {
   changeUserData,
   addCard,
   deleteCard,
+  //
+  putLikeCard,
+  deleteLikeCard,
 };

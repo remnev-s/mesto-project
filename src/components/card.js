@@ -12,6 +12,9 @@ import {
   addCard,
   errorHandler,
   deleteCard,
+  //
+  putLikeCard,
+  deleteLikeCard,
 } from './api.js';
 
 import { userId } from '../pages/index.js';
@@ -36,6 +39,7 @@ const createCard = ({ name, link, likes, cardId, ownerId }) => {
     .querySelector('.elements__list-item')
     .cloneNode(true);
   const elementsPhoto = listElement.querySelector('.elements__list-photo');
+  const cardLike = listElement.querySelector('.elements__like-btn');
 
   listElement.id = cardId;
   // добавляем данные из аргумента
@@ -49,8 +53,12 @@ const createCard = ({ name, link, likes, cardId, ownerId }) => {
   // const cardId = cardData._id;
   // const cardOwnerId = cardData.owner._id;
 
-  // const myLike = Boolean(likes.find((userData) => userData._id === userId));
-
+  const myLike = Boolean(likes.find((userData) => userData._id === userId));
+  if (myLike) {
+    cardLike.classList.add('elements__like-btn_active');
+  }
+  updateLikesPost(listElement, likes.length);
+  cardLike.addEventListener('click', changeReactionPost);
   // console.log(myLike);
 
   //обработчик на лайк
@@ -78,6 +86,32 @@ const createCard = ({ name, link, likes, cardId, ownerId }) => {
     openPopup(popupImg);
   });
   return listElement; //вернул готовую карточку через return
+};
+
+/* Функция постановки и удаления лайка */
+const changeReactionPost = (evt) => {
+  const likePost = evt.target.closest('.elements__list-item');
+  const reactionPressed = evt.target;
+
+  if (reactionPressed.classList.contains('elements__like-btn_active')) {
+    deleteLikeCard(likePost.id)
+      .then((res) => {
+        reactionPressed.classList.remove('elements__like-btn_active');
+        updateLikesPost(likePost, res.likes.length);
+      })
+      .catch(errorHandler);
+  } else {
+    putLikeCard(likePost.id)
+      .then((res) => {
+        reactionPressed.classList.add('elements__like-btn_active');
+        updateLikesPost(likePost, res.likes.length);
+      })
+      .catch(errorHandler);
+  }
+};
+
+const updateLikesPost = (listElement, countLikes) => {
+  listElement.querySelector('.elements__like-count').textContent = countLikes;
 };
 
 const renderCard = (newCard, container) => {
@@ -112,7 +146,6 @@ const submitNewCard = (evt) => {
       const newPost = createCard({ name, link, likes, cardId, ownerId });
       renderCard(newPost, templateList);
       closePopup(cardsPopup);
-      console.log(addCard);
       formAddNewCard.reset();
       saveBtnCard.classList.add('popup__save-btn_inactive');
       saveBtnCard.setAttribute('disabled', true);

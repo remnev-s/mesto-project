@@ -72,7 +72,6 @@ const setButtonState = (button, isSending) => {
 };
 
 /* ——————————————————————————————————————————————————————————————— */
-
 const nameInput = document.querySelector('.popup__input-name');
 const jobInput = document.querySelector('.popup__input-about');
 
@@ -163,9 +162,14 @@ cardsPopupDelete.addEventListener('click', () => {
   closePopup(popupDeleteCard);
 });
 
+const changeTextSubmit = (buttonElement, text) => {
+  buttonElement.textContent = text;
+};
 const submitFormDeleteCard = (evt) => {
   evt.preventDefault();
   changeTextSubmit(popupSubmitDeleteAvatar, 'Удаление...');
+
+  // setButtonState(popupSubmitAvatar, true);
   deletePost(dataForPopup)
     .then(() => {
       closePopup(popupDeleteCard);
