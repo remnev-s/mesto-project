@@ -19,17 +19,8 @@ const avatar = document.querySelector('.profile__avatar');
 const avatarPopup = document.querySelector('.popup_avatar');
 const avatarPopupClose = document.querySelector('.popup__close-btn_add_avatar');
 
-// const nameInput = document.querySelector('.popup__input-name');
-// const jobInput = document.querySelector('.popup__input-about');
-// const infoName = document.querySelector('.info__name');
-// const infoDescription = document.querySelector('.info__description');
-
 const popupSaveBtn = document.querySelector('.popup__save-btn');
 const formElement = document.querySelector('.popup__form');
-
-const changeTextSubmit = (buttonElement, text) => {
-  buttonElement.textContent = text;
-};
 
 //ФУНКЦИЯ ОТКРЫТИЯ ПОПАПА
 const openPopup = (popups) => {
@@ -73,7 +64,15 @@ cardsPopupClose.addEventListener('click', () => {
 imagePopupClose.addEventListener('click', () => {
   closePopup(popupImg);
 });
-/* -------------------------------------------------- */
+
+/* ——————————————————————————————————————————————————————————————— */
+const setButtonState = (button, isSending) => {
+  button.disabled = isSending;
+  button.textContent = isSending ? 'Cохранение...' : 'Сохранить';
+};
+
+/* ——————————————————————————————————————————————————————————————— */
+
 const nameInput = document.querySelector('.popup__input-name');
 const jobInput = document.querySelector('.popup__input-about');
 
@@ -85,7 +84,7 @@ const formPopupProfile = document.querySelector('.popup__form-profile');
 const popupSubmitProfile = formPopupProfile.querySelector('.popup__submit');
 const submitChangeUserInfo = (evt) => {
   evt.preventDefault();
-  changeTextSubmit(popupSubmitProfile, 'Сохранение...');
+  setButtonState(popupSubmitProfile, true);
   const newUserInfo = {
     name: nameInput.value,
     about: jobInput.value,
@@ -101,7 +100,7 @@ const submitChangeUserInfo = (evt) => {
     })
     .catch(errorHandler)
     .finally(() => {
-      changeTextSubmit(popupSubmitProfile, 'Сохранить');
+      setButtonState(popupSubmitProfile, false);
     });
 };
 formPopupProfile.addEventListener('submit', submitChangeUserInfo);
@@ -123,6 +122,8 @@ infoPopupClose.addEventListener('click', () => {
 const formPopupAvatar = document.querySelector('.popup__form-avatar');
 const popupInputAvatar = document.querySelector('.popup__input-avatar');
 const avatarImage = document.querySelector('.profile__avatar-img');
+const popupSubmitAvatar = formPopupAvatar.querySelector('.popup__submit');
+
 //АВАТАР ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА
 avatar.addEventListener('click', () => {
   openPopup(avatarPopup);
@@ -134,6 +135,7 @@ avatarPopupClose.addEventListener('click', () => {
 //АВАТАР
 const submitAvatar = (evt) => {
   evt.preventDefault();
+  setButtonState(popupSubmitAvatar, true);
   updateImage(popupInputAvatar.value)
     .then((newAvatar) => {
       avatarImage.src = newAvatar;
@@ -142,7 +144,10 @@ const submitAvatar = (evt) => {
       popupSubmitAvatar.classList.add('popup__save-btn_inactive');
       popupSubmitAvatar.setAttribute('disabled', true);
     })
-    .catch(errorHandler);
+    .catch(errorHandler)
+    .finally(() => {
+      setButtonState(popupSubmitAvatar, false);
+    });
 };
 formPopupAvatar.addEventListener('submit', submitAvatar);
 
@@ -152,7 +157,7 @@ const saveDataForPopup = (data) => {
 };
 
 const formDeleteCard = document.querySelector('.popup__form-delete-card');
-const popupSubmitAvatar = formDeleteCard.querySelector('.popup__submit');
+const popupSubmitDeleteAvatar = formDeleteCard.querySelector('.popup__submit');
 const popupDeleteCard = document.querySelector('.popup_delete-card');
 cardsPopupDelete.addEventListener('click', () => {
   closePopup(popupDeleteCard);
@@ -160,14 +165,14 @@ cardsPopupDelete.addEventListener('click', () => {
 
 const submitFormDeleteCard = (evt) => {
   evt.preventDefault();
-  changeTextSubmit(popupSubmitAvatar, 'Удаление...');
+  changeTextSubmit(popupSubmitDeleteAvatar, 'Удаление...');
   deletePost(dataForPopup)
     .then(() => {
       closePopup(popupDeleteCard);
     })
     .catch(errorHandler)
     .finally(() => {
-      changeTextSubmit(popupSubmitAvatar, 'Да');
+      changeTextSubmit(popupSubmitDeleteAvatar, 'Да');
     });
 };
 
@@ -187,4 +192,5 @@ export {
   avatarImage,
   //
   saveDataForPopup,
+  setButtonState,
 };

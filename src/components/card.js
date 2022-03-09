@@ -4,6 +4,7 @@ import {
   closePopup,
   popupDeleteCard,
   saveDataForPopup,
+  setButtonState,
 } from './modal.js';
 import {
   getUserInfo,
@@ -21,6 +22,8 @@ const templateElement = document.querySelector('.template').content; //клон�
 
 // const formAddNewCard = cardsPopup.querySelector('.popup__form');
 const formAddNewCard = cardsPopup.querySelector('.popup__form-card');
+const popupSubmitNewCard = formAddNewCard.querySelector('.popup__submit');
+
 const image = document.querySelector('.popup_image-photo');
 const imageCaption = document.querySelector('.popup_image-caption');
 const popupImg = document.querySelector('.popup_image');
@@ -92,7 +95,7 @@ const deletePost = (evt) => {
 /*СОЗДАНИЕ НОВОЙ КАРТОЧКИ*/
 const submitNewCard = (evt) => {
   evt.preventDefault();
-
+  setButtonState(popupSubmitNewCard, true);
   const newCard = {
     name: titleInput.value,
     link: linkInput.value,
@@ -114,7 +117,10 @@ const submitNewCard = (evt) => {
       saveBtnCard.classList.add('popup__save-btn_inactive');
       saveBtnCard.setAttribute('disabled', true);
     })
-    .catch(errorHandler);
+    .catch(errorHandler)
+    .finally(() => {
+      setButtonState(popupSubmitNewCard, false);
+    });
 };
 formAddNewCard.addEventListener('submit', submitNewCard);
 
