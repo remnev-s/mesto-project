@@ -4,13 +4,12 @@ import { createCard, renderCard, templateList } from '../components/card.js';
 import { infoName, infoDescription, avatarImage } from '../components/modal.js';
 
 /* ---------------------------------------------------------------------------- */
-import { getUserInfo, getCards } from '../components/api.js';
+import { getUserInfo, getCards, errorHandler } from '../components/api.js';
 
 const getAppInfo = () => {
   return Promise.all([getUserInfo(), getCards()]);
 };
 
-export let userId;
 getAppInfo()
   .then(([getUserInfo, getCards]) => {
     infoName.textContent = getUserInfo.name;
@@ -19,7 +18,7 @@ getAppInfo()
     avatarImage.src = getUserInfo.avatar;
     userId = getUserInfo._id;
 
-    getCards.forEach((item) => {
+    getCards.reverse().forEach((item) => {
       const {
         name,
         link,
@@ -29,12 +28,10 @@ getAppInfo()
       } = item;
       const newCard = createCard({ name, link, likes, cardId, ownerId });
 
-      // addCard(newCard, templateList);
       renderCard(newCard, templateList);
-      // console.log(addCard);
     });
   })
-  .catch((err) => console.log(err));
+  .catch(errorHandler);
 
 enableValidation({
   formSelector: '.popup__form',
@@ -44,3 +41,5 @@ enableValidation({
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active',
 });
+
+export let userId;

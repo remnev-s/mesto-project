@@ -6,17 +6,17 @@ const config = {
   },
 };
 
-// const getResponseData = (res) => {
-//   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
-// };
-
 const getResponseData = (res) => {
-  if (res.ok) {
-    return res.json();
-  }
-
-  return Promise.reject(`Ошибка ${res.status}`);
+  return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 };
+
+// const getResponseData = (res) => {
+//   if (res.ok) {
+//     return res.json();
+//   }
+//
+//   return Promise.reject(`Ошибка ${res.status}`);
+// };
 
 const errorHandler = (err) => {
   console.log(err);

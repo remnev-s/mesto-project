@@ -21,9 +21,7 @@ import { userId } from '../pages/index.js';
 
 // КОНТЕЙНЕР ДЛЯ ДОБАВЛЕНИЯ КАРТОЧЕК
 const templateList = document.querySelector('.elements__list');
-const templateElement = document.querySelector('.template').content; //клонировать разметку
 
-// const formAddNewCard = cardsPopup.querySelector('.popup__form');
 const formAddNewCard = cardsPopup.querySelector('.popup__form-card');
 const popupSubmitNewCard = formAddNewCard.querySelector('.popup__submit');
 
@@ -35,14 +33,15 @@ const linkInput = document.querySelector('.popup__input-link'); // переме�
 const saveBtnCard = document.querySelector('.popup__save-btn_add_card');
 
 const createCard = ({ name, link, likes, cardId, ownerId }) => {
-  const listElement = templateElement
-    .querySelector('.elements__list-item')
+  const listElement = document
+    .querySelector('.template')
+    .content.querySelector('.elements__list-item')
     .cloneNode(true);
+
   const elementsPhoto = listElement.querySelector('.elements__list-photo');
   const cardLike = listElement.querySelector('.elements__like-btn');
 
   listElement.id = cardId;
-  // добавляем данные из аргумента
   listElement.querySelector('.elements__description').textContent = name;
   elementsPhoto.src = link;
   elementsPhoto.alt = name;
@@ -50,25 +49,14 @@ const createCard = ({ name, link, likes, cardId, ownerId }) => {
   const cardLikeCounter = listElement.querySelector('.elements__like-count');
   cardLikeCounter.textContent = likes.length.toString();
 
-  // const cardId = cardData._id;
-  // const cardOwnerId = cardData.owner._id;
-
   const myLike = Boolean(likes.find((userData) => userData._id === userId));
   if (myLike) {
     cardLike.classList.add('elements__like-btn_active');
   }
   updateLikesPost(listElement, likes.length);
   cardLike.addEventListener('click', changeReactionPost);
-  // console.log(myLike);
 
-  //обработчик на лайк
-  // listElement
-  //   .querySelector('.elements__like-btn')
-  //   .addEventListener('click', (evt) => {
-  //     evt.target.classList.toggle('elements__like-btn_active');
-  //   });
-
-  //обработчик на удаление карточки
+  //ОБРАБОТЧИК НА УДАЛЕНИЕ КАРТОЧКИ
   if (ownerId === userId) {
     const deleteButton = listElement.querySelector('.elements__button-delete');
     deleteButton.classList.add('elements__button_inactive');
@@ -85,37 +73,37 @@ const createCard = ({ name, link, likes, cardId, ownerId }) => {
     imageCaption.textContent = name;
     openPopup(popupImg);
   });
-  return listElement; //вернул готовую карточку через return
+  return listElement;
 };
 
-/* Функция постановки и удаления лайка */
+const renderCard = (newCard, container) => {
+  container.prepend(newCard);
+};
+
+/* ФУНКЦИЯ ПОСТАНОВКИ И УДАЛЕНИЯ ЛАЙКА */
 const changeReactionPost = (evt) => {
   const likePost = evt.target.closest('.elements__list-item');
-  const reactionPressed = evt.target;
+  const pressed = evt.target;
 
-  if (reactionPressed.classList.contains('elements__like-btn_active')) {
+  if (pressed.classList.contains('elements__like-btn_active')) {
     deleteLikeCard(likePost.id)
       .then((res) => {
-        reactionPressed.classList.remove('elements__like-btn_active');
+        pressed.classList.remove('elements__like-btn_active');
         updateLikesPost(likePost, res.likes.length);
       })
       .catch(errorHandler);
   } else {
     putLikeCard(likePost.id)
       .then((res) => {
-        reactionPressed.classList.add('elements__like-btn_active');
+        pressed.classList.add('elements__like-btn_active');
         updateLikesPost(likePost, res.likes.length);
       })
       .catch(errorHandler);
   }
 };
 
-const updateLikesPost = (listElement, countLikes) => {
-  listElement.querySelector('.elements__like-count').textContent = countLikes;
-};
-
-const renderCard = (newCard, container) => {
-  container.prepend(newCard);
+const updateLikesPost = (list, countLikes) => {
+  list.querySelector('.elements__like-count').textContent = countLikes;
 };
 
 const deletePost = (evt) => {
