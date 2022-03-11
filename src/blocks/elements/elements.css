@@ -6,11 +6,3 @@
   .elements {
   }
 }
-
-.elements__like-count {
-  color: #000;
-  grid-column: 2/3;
-  justify-self: end;
-  margin: 3px 8px 0 0;
-  font-size: 13px;
-}
