@@ -1,7 +1,7 @@
 const config = {
-  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-6/',
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort7/',
   headers: {
-    authorization: '26241a74-b60b-456a-8bd5-fd0d2583c71d',
+    authorization: 'a794a2ca-2fdb-43bd-a4a4-85b3c1a8c71e',
     'Content-Type': 'application/json',
   },
 };
