@@ -33,6 +33,7 @@ getAppInfo()
 enableValidation({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
+  fieldsetSelector: '.popup__form-set',
   submitButtonSelector: '.popup__submit',
   inactiveButtonClass: 'popup__save-btn_inactive',
   inputErrorClass: 'popup__input_type_error',
