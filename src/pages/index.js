@@ -18,17 +18,14 @@ getAppInfo()
     avatarImage.src = getUserInfo.avatar;
     userId = getUserInfo._id;
 
-    getCards.reverse().forEach((item) => {
-      const {
-        name,
-        link,
-        likes,
-        _id: cardId,
-        owner: { _id: ownerId },
-      } = item;
-      const newCard = createCard({ name, link, likes, cardId, ownerId });
+    getCards.reverse().forEach((getCards) => {
+      const cardElement = createCard({
+        ...getCards,
+        cardId: getCards._id,
+        ownerId: getCards.owner._id,
+      });
 
-      renderCard(newCard, templateList);
+      renderCard(cardElement, templateList);
     });
   })
   .catch(errorHandler);
@@ -43,3 +40,5 @@ enableValidation({
 });
 
 export let userId;
+
+export { getAppInfo };

@@ -17,7 +17,7 @@ import {
   deleteLikeCard,
 } from './api.js';
 
-import { userId } from '../pages/index.js';
+import { userId, getAppInfo } from '../pages/index.js';
 
 // КОНТЕЙНЕР ДЛЯ ДОБАВЛЕНИЯ КАРТОЧЕК
 const templateList = document.querySelector('.elements__list');
