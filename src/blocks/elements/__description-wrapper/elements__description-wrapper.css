@@ -1,7 +1,9 @@
 .elements__description-wrapper {
-  display: flex;
+  /*   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: center; */
+
+  display: grid;
   padding: 20px;
 
   text-overflow: ellipsis;

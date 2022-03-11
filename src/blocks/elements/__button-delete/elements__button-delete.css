@@ -11,8 +11,15 @@
   border: none;
   cursor: pointer;
   transition: opacity 0.3s linear;
+
+  opacity: 0;
 }
 
-.elements__button-delete:hover {
+/* .elements__button-delete:hover {
   opacity: 0.5;
+} */
+
+.elements__button_inactive {
+  /*   display: none; */
+  opacity: 1;
 }

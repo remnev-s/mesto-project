@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--         <link rel="stylesheet" href="./pages/index.css" /> -->
     <title>Mesto</title>
   </head>
   <body class="root">
@@ -17,12 +16,13 @@
 
     <main class="content root__content">
       <section class="profile profile-wrapper">
-        <img
-          src="<%=require('./images/avatar.jpg')%>"
-          alt="аватар"
-          class="profile__avatar"
-        />
-
+        <div class="profile__avatar">
+          <img
+            src="<%=require('./images/avatar.jpg')%>"
+            alt="аватар"
+            class="profile__avatar-img"
+          />
+        </div>
         <div class="info">
           <div class="info__container">
             <h1 class="info__name">Жак-Ив Кусто</h1>
@@ -44,7 +44,7 @@
 
     <section class="popup">
       <div class="popup__container">
-        <form class="popup__form" name="form" novalidate>
+        <form class="popup__form popup__form-profile" name="form" novalidate>
           <h2 class="popup__title">Редактировать профиль</h2>
           <fieldset class="popup__form-set">
             <label class="popup__form-field">
@@ -74,7 +74,10 @@
               />
               <span class="popup__input-error about-input-error"></span>
             </label>
-            <button class="popup__save-btn popup__submit" type="submit">
+            <button
+              class="popup__save-btn popup__submit popup__submit-profile"
+              type="submit"
+            >
               Сохранить
             </button>
           </fieldset>
@@ -84,10 +87,10 @@
         </button>
       </div>
     </section>
-
+    <!--POPUP ДОБАВЛЕНИЯ КАРТОЧКИ-->
     <section class="popup popup-cards">
       <div class="popup__container">
-        <form class="popup__form" name="form" novalidate>
+        <form class="popup__form popup__form-card" name="form" novalidate>
           <h2 class="popup__title">Новое место</h2>
           <fieldset class="popup__form-set">
             <label class="popup__form-field">
@@ -130,7 +133,64 @@
         </button>
       </div>
     </section>
+    <!--РЕДАКТИРОВАНИЕ АВАТАРА-->
+    <section class="popup popup_avatar">
+      <div class="popup__container">
+        <form class="popup__form popup__form-avatar" name="form" novalidate>
+          <h2 class="popup__title">Обновить аватар</h2>
+          <fieldset class="popup__form-set">
+            <label class="popup__form-field">
+              <input
+                class="popup__input popup__input-link popup__input-avatar"
+                type="url"
+                id="avatar-input"
+                placeholder="Ссылка на картинку"
+                minlength="2"
+                required
+              />
+              <span class="popup__input-error avatar-input-error"></span>
+            </label>
+            <button class="popup__save-btn popup__submit" type="submit">
+              Сохранить
+            </button>
+          </fieldset>
+        </form>
+        <button
+          class="popup__close-btn popup__close-btn_add_avatar"
+          type="button"
+          title="Закрыть"
+        >
+          Закрыть
+        </button>
+      </div>
+    </section>
 
+    <!--POPUP УДАЛЕНИЯ КАРТИНОК-->
+    <section class="popup popup_delete-card">
+      <div class="popup__container">
+        <form
+          class="popup__form popup__form-delete-card"
+          name="delete-card"
+          novalidate
+        >
+          <h2 class="popup__title">Вы уверены?</h2>
+          <fieldset class="popup__form-set">
+            <button class="popup__save-btn popup__submit" type="submit">
+              Да
+            </button>
+          </fieldset>
+        </form>
+        <button
+          class="popup__close-btn popup__close-btn_delete_card"
+          type="button"
+          title="Закрыть"
+        >
+          Закрыть
+        </button>
+      </div>
+    </section>
+
+    <!--ОТКРЫТИЕ КАРТИНОК-->
     <section class="popup popup_image">
       <div class="popup__container popup__container-image">
         <button
@@ -153,10 +213,9 @@
         <div class="elements__description-wrapper">
           <h2 class="elements__description"></h2>
           <button class="elements__like-btn" type="button"></button>
+          <span class="elements__like-count"></span>
         </div>
       </li>
     </template>
-
-    <!--         <script src="./pages/index.js"></script> -->
   </body>
 </html>

@@ -1,116 +1,148 @@
 import {
   cardsPopup,
-  infoPopup,
   openPopup,
   closePopup,
-  cardsPopupClose,
+  popupDeleteCard,
+  saveDataForPopup,
+  setButtonState,
 } from './modal.js';
+import {
+  getUserInfo,
+  getCards,
+  addCard,
+  errorHandler,
+  deleteCard,
+  //
+  putLikeCard,
+  deleteLikeCard,
+} from './api.js';
+
+import { userId, getAppInfo } from '../pages/index.js';
 
 // КОНТЕЙНЕР ДЛЯ ДОБАВЛЕНИЯ КАРТОЧЕК
 const templateList = document.querySelector('.elements__list');
-const templateElement = document.querySelector('.template').content; //клонировать разметку
 
-const formAddNewCard = cardsPopup.querySelector('.popup__form');
+const formAddNewCard = cardsPopup.querySelector('.popup__form-card');
+const popupSubmitNewCard = formAddNewCard.querySelector('.popup__submit');
+
 const image = document.querySelector('.popup_image-photo');
 const imageCaption = document.querySelector('.popup_image-caption');
 const popupImg = document.querySelector('.popup_image');
 const titleInput = document.querySelector('.popup__input-title'); // переменная названия картинки
 const linkInput = document.querySelector('.popup__input-link'); // переменная ссылки картинки
 const saveBtnCard = document.querySelector('.popup__save-btn_add_card');
-const popupSaveBtn = document.querySelector('.popup__save-btn');
 
-// КАРТОЧКИ ИЗ КОРОБКИ
-const initialCards = [
-  {
-    name: 'Сочи',
-    link: 'https://images.unsplash.com/photo-1631603296585-8e7e9a7a8f7e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80',
-  },
-  {
-    name: 'Офис',
-    link: 'https://images.unsplash.com/photo-1631607359300-59830a31c76c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80',
-  },
-  {
-    name: 'Дача',
-    link: 'https://images.unsplash.com/photo-1632112539492-203b5002ff05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1664&q=80',
-  },
-  {
-    name: 'Капотня',
-    link: 'https://images.unsplash.com/photo-1544380904-c686aad2fc40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80',
-  },
-  {
-    name: 'На райончике',
-    link: 'https://images.unsplash.com/photo-1516144935500-ecacf0e53552?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1784&q=80',
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://images.unsplash.com/photo-1635243541748-ec8ed7063ccc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
-  },
-];
-
-/* ---------------------------------------------------------------------------- */
-
-function createCard(item) {
-  const listElement = templateElement
-    .querySelector('.elements__list-item')
+const createCard = ({ name, link, likes, cardId, ownerId }) => {
+  const listElement = document
+    .querySelector('.template')
+    .content.querySelector('.elements__list-item')
     .cloneNode(true);
 
   const elementsPhoto = listElement.querySelector('.elements__list-photo');
-  const elementsDescription = listElement.querySelector(
-    '.elements__description'
-  );
-  // добавляем данные из аргумента
-  elementsPhoto.src = item.link;
-  elementsPhoto.alt = item.name;
-  elementsDescription.textContent = item.name;
+  const cardLike = listElement.querySelector('.elements__like-btn');
 
-  //обработчик на лайк
-  listElement
-    .querySelector('.elements__like-btn')
-    .addEventListener('click', function (evt) {
-      evt.target.classList.toggle('elements__like-btn_active');
+  listElement.id = cardId;
+  listElement.querySelector('.elements__description').textContent = name;
+  elementsPhoto.src = link;
+  elementsPhoto.alt = name;
+
+  const cardLikeCounter = listElement.querySelector('.elements__like-count');
+  cardLikeCounter.textContent = likes.length.toString();
+
+  const myLike = Boolean(likes.find((userData) => userData._id === userId));
+  if (myLike) {
+    cardLike.classList.add('elements__like-btn_active');
+  }
+  updateLikesPost(listElement, likes.length);
+  cardLike.addEventListener('click', changeReactionPost);
+
+  //ОБРАБОТЧИК НА УДАЛЕНИЕ КАРТОЧКИ
+  if (ownerId === userId) {
+    const deleteButton = listElement.querySelector('.elements__button-delete');
+    deleteButton.classList.add('elements__button_inactive');
+    deleteButton.addEventListener('click', (evt) => {
+      openPopup(popupDeleteCard);
+      saveDataForPopup(evt);
     });
+  }
 
-  //обработчик на удаление карточки
-  listElement
-    .querySelector('.elements__button-delete')
-    .addEventListener('click', function (evt) {
-      evt.target.closest('.elements__list-item').remove();
-    });
-
-  //обработчик на карточку для открытия картинки
-  elementsPhoto.addEventListener('click', function () {
-    image.src = item.link;
-    image.alt = item.name;
-    imageCaption.textContent = item.name;
-
+  //ОБРАБОТЧИК НА КАРТОЧКУ ДЛЯ ОТКРЫТИЯ КАРТИНКИ
+  elementsPhoto.addEventListener('click', () => {
+    image.src = link;
+    image.alt = name;
+    imageCaption.textContent = name;
     openPopup(popupImg);
   });
-  return listElement; //вернул готовую карточку через return
-}
+  return listElement;
+};
 
-// функция добавления карточку на страницу
-function addCard(item, container) {
-  const newCard = createCard(item);
+const renderCard = (newCard, container) => {
   container.prepend(newCard);
-}
+};
 
-// Карточки из коробки
-initialCards.forEach(function (item) {
-  addCard(item, templateList);
-});
+/* ФУНКЦИЯ ПОСТАНОВКИ И УДАЛЕНИЯ ЛАЙКА */
+const changeReactionPost = (evt) => {
+  const likePost = evt.target.closest('.elements__list-item');
+  const pressed = evt.target;
 
-/*Создание новой карточки*/
-function handlerCardFormSubmit(evt, item) {
+  if (pressed.classList.contains('elements__like-btn_active')) {
+    deleteLikeCard(likePost.id)
+      .then((res) => {
+        pressed.classList.remove('elements__like-btn_active');
+        updateLikesPost(likePost, res.likes.length);
+      })
+      .catch(errorHandler);
+  } else {
+    putLikeCard(likePost.id)
+      .then((res) => {
+        pressed.classList.add('elements__like-btn_active');
+        updateLikesPost(likePost, res.likes.length);
+      })
+      .catch(errorHandler);
+  }
+};
+
+const updateLikesPost = (list, countLikes) => {
+  list.querySelector('.elements__like-count').textContent = countLikes;
+};
+
+const deletePost = (evt) => {
+  const deletePost = evt.target.closest('.elements__list-item');
+
+  return deleteCard(deletePost.id).then(() => {
+    deletePost.remove();
+  });
+};
+
+/*СОЗДАНИЕ НОВОЙ КАРТОЧКИ*/
+const submitNewCard = (evt) => {
   evt.preventDefault();
-  addCard(
-    (item = { name: titleInput.value, link: linkInput.value }),
-    templateList
-  );
-  closePopup(cardsPopup);
-  formAddNewCard.reset();
-  saveBtnCard.classList.add('popup__save-btn_inactive');
-  saveBtnCard.setAttribute('disabled', true);
-}
-formAddNewCard.addEventListener('submit', handlerCardFormSubmit);
+  setButtonState(popupSubmitNewCard, true);
+  const newCard = {
+    name: titleInput.value,
+    link: linkInput.value,
+  };
+  addCard(newCard)
+    .then((newCard) => {
+      const {
+        name,
+        link,
+        likes,
+        _id: cardId,
+        owner: { _id: ownerId },
+      } = newCard;
+      const newPost = createCard({ name, link, likes, cardId, ownerId });
+      renderCard(newPost, templateList);
+      closePopup(cardsPopup);
+      formAddNewCard.reset();
+      saveBtnCard.classList.add('popup__save-btn_inactive');
+      saveBtnCard.setAttribute('disabled', true);
+    })
+    .catch(errorHandler)
+    .finally(() => {
+      setButtonState(popupSubmitNewCard, false);
+    });
+};
+formAddNewCard.addEventListener('submit', submitNewCard);
 
-export { createCard, popupSaveBtn };
+export { createCard, renderCard, templateList, deletePost };

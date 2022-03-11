@@ -1,53 +1,34 @@
 import './index.css';
 import { enableValidation } from '../components/validate.js';
-import {
-  createCard,
-  handlerCardFormSubmit,
-  popupSaveBtn,
-} from '../components/card.js';
-import {
-  openPopup,
-  closePopup,
-  popup,
-  infoEdit,
-  infoPopupClose,
-  cardsPopupOpen,
-  cardsPopupClose,
-  imagePopupClose,
-  cardsPopup,
-  infoPopup,
-  nameInput,
-  jobInput,
-  infoName,
-  infoDescription,
-} from '../components/modal.js';
-
-// ПЕРЕМЕННЫЕ ДЛЯ ПОПАПА ОТКРЫТИЯ КАРТИНОК
-const popupImg = document.querySelector('.popup_image');
-
-// ПЕРЕМЕННЫ ДЛЯ ФОРМ
-const formElement = document.querySelector('.popup__form');
-
-const saveBtnCard = document.querySelector('.popup__save-btn_add_card'); // кнопка создать
+import { createCard, renderCard, templateList } from '../components/card.js';
+import { infoName, infoDescription, avatarImage } from '../components/modal.js';
 
 /* ---------------------------------------------------------------------------- */
-const titleInput = document.querySelector('.popup__input-title'); // переменная названия картинки
-const linkInput = document.querySelector('.popup__input-link'); // переменная ссылки картинки
+import { getUserInfo, getCards, errorHandler } from '../components/api.js';
 
-// ФОРМА РЕДАКТИРОВАНИЯ ПРОФИЛЯ
-function getFormSubmitHandler(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+const getAppInfo = () => {
+  return Promise.all([getUserInfo(), getCards()]);
+};
 
-  infoName.textContent = nameInput.value;
-  infoDescription.textContent = jobInput.value;
+getAppInfo()
+  .then(([getUserInfo, getCards]) => {
+    infoName.textContent = getUserInfo.name;
+    infoDescription.textContent = getUserInfo.about;
+    avatarImage.alt = getUserInfo.name;
+    avatarImage.src = getUserInfo.avatar;
+    userId = getUserInfo._id;
 
-  closePopup(infoPopup);
-  formElement.reset();
-  popupSaveBtn.classList.add('popup__save-btn_inactive');
-  popupSaveBtn.setAttribute('disabled', true);
-}
-formElement.addEventListener('submit', getFormSubmitHandler);
-/* ---------------------------------------------------------------------------- */
+    getCards.reverse().forEach((getCards) => {
+      const cardElement = createCard({
+        ...getCards,
+        cardId: getCards._id,
+        ownerId: getCards.owner._id,
+      });
+
+      renderCard(cardElement, templateList);
+    });
+  })
+  .catch(errorHandler);
 
 enableValidation({
   formSelector: '.popup__form',
@@ -57,3 +38,7 @@ enableValidation({
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active',
 });
+
+export let userId;
+
+export { getAppInfo };

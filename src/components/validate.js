@@ -68,13 +68,3 @@ function toggleButtonState(inputList, buttonElement) {
 }
 
 export { enableValidation };
-
-// export {
-//   showInputError,
-//   hideInputError,
-//   checkInputValidity,
-//   setEventListeners,
-//   enableValidation,
-//   hasInvalidInput,
-//   toggleButtonState,
-// };

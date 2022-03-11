@@ -5,9 +5,11 @@
   transition: opacity 0.3s linear;
   background-image: url(../../../images/heart.svg);
   background-repeat: no-repeat;
-  width: 22px;
+  width: 24px;
   height: 19px;
   padding: 10px;
+
+  justify-self: end;
 }
 
 .elements__like-btn:hover {
