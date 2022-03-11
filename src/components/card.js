@@ -5,6 +5,7 @@ import {
   popupDeleteCard,
   saveDataForPopup,
   setButtonState,
+  disableButton,
 } from './modal.js';
 import {
   getUserInfo,
@@ -25,9 +26,9 @@ const templateList = document.querySelector('.elements__list');
 const formAddNewCard = cardsPopup.querySelector('.popup__form-card');
 const popupSubmitNewCard = formAddNewCard.querySelector('.popup__submit');
 
-const image = document.querySelector('.popup_image-photo');
-const imageCaption = document.querySelector('.popup_image-caption');
-const popupImg = document.querySelector('.popup_image');
+const image = document.querySelector('.image-popup__photo');
+const imageCaption = document.querySelector('.image-popup__caption');
+const popupImg = document.querySelector('.image-popup');
 const titleInput = document.querySelector('.popup__input-title'); // переменная названия картинки
 const linkInput = document.querySelector('.popup__input-link'); // переменная ссылки картинки
 const saveBtnCard = document.querySelector('.popup__save-btn_add_card');
@@ -135,8 +136,7 @@ const submitNewCard = (evt) => {
       renderCard(newPost, templateList);
       closePopup(cardsPopup);
       formAddNewCard.reset();
-      saveBtnCard.classList.add('popup__save-btn_inactive');
-      saveBtnCard.setAttribute('disabled', true);
+      disableButton(saveBtnCard);
     })
     .catch(errorHandler)
     .finally(() => {

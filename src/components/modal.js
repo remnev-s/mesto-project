@@ -1,26 +1,33 @@
 import { updateImage, errorHandler, changeUserData } from './api.js';
 import { deletePost } from './card.js';
-const popups = document.querySelectorAll('.popup');
-const infoPopupClose = document.querySelector('.popup__close-btn');
-const infoPopup = document.querySelector('.popup');
 
+const popups = document.querySelectorAll('.popup');
+const infoPopup = document.querySelector('.popup');
+const infoUserEdit = document.querySelector('.info__edit-btn');
+
+const cardsPopup = document.querySelector('.cards-popup');
 const cardsPopupOpen = document.querySelector('.profile__add-btn');
-const cardsPopupClose = document.querySelector('.popup__close-btn_add_card');
-const cardsPopupDelete = document.querySelector(
-  '.popup__close-btn_delete_card'
-);
-const imagePopupClose = document.querySelector(
-  '.popup__close-btn_image_fullsize'
-);
-const cardsPopup = document.querySelector('.popup-cards');
-const popupImg = document.querySelector('.popup_image');
 
 const avatar = document.querySelector('.profile__avatar');
-const avatarPopup = document.querySelector('.popup_avatar');
-const avatarPopupClose = document.querySelector('.popup__close-btn_add_avatar');
+const avatarPopup = document.querySelector('.avatar-popup');
 
-const popupSaveBtn = document.querySelector('.popup__save-btn');
-const formElement = document.querySelector('.popup__form');
+const profileForm = document.querySelector('.popup__form');
+const profileFormPopup = document.querySelector('.popup__form-profile');
+const profileSubmitBtn = profileFormPopup.querySelector('.popup__submit');
+
+const nameInput = document.querySelector('.popup__input-name');
+const jobInput = document.querySelector('.popup__input-about');
+const infoName = document.querySelector('.info__name');
+const infoDescription = document.querySelector('.info__description');
+
+const formDeleteCard = document.querySelector('.popup__form-delete-card');
+const popupSubmitDeleteAvatar = formDeleteCard.querySelector('.popup__submit');
+const popupDeleteCard = document.querySelector('.card-delete-popup');
+
+const formPopupAvatar = document.querySelector('.popup__form-avatar');
+const popupInputAvatar = document.querySelector('.popup__input-avatar');
+const avatarImage = document.querySelector('.profile__avatar-img');
+const popupSubmitAvatar = formPopupAvatar.querySelector('.popup__submit');
 
 //ФУНКЦИЯ ОТКРЫТИЯ ПОПАПА
 const openPopup = (popups) => {
@@ -33,14 +40,6 @@ const closePopup = (popups) => {
   window.removeEventListener('keydown', closeByEscape);
 };
 
-const closeOverlayClick = (evt) => {
-  if (evt.type === 'click') {
-    if (evt.target === evt.currentTarget) {
-      closePopup(evt.target);
-    }
-  }
-};
-
 const closeByEscape = (evt) => {
   if (evt.key === 'Escape') {
     const openedPopup = document.querySelector('.popup_opened'); //нашли открытый попап
@@ -48,42 +47,45 @@ const closeByEscape = (evt) => {
   }
 };
 
-popups.forEach((item) => {
-  item.addEventListener('click', closeOverlayClick);
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(popup);
+    }
+    if (evt.target.classList.contains('popup__close-btn')) {
+      closePopup(popup);
+    }
+  });
 });
 
-// ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА ДОБАВЛЕНИЯ КАРТОЧЕК НА СТРАНИЦУ
 cardsPopupOpen.addEventListener('click', () => {
   openPopup(cardsPopup);
 });
-cardsPopupClose.addEventListener('click', () => {
-  closePopup(cardsPopup);
+avatar.addEventListener('click', () => {
+  openPopup(avatarPopup);
 });
 
-// ОБРАБОТЧИК ЗАКРЫТИЯ КАРТИНОК
-imagePopupClose.addEventListener('click', () => {
-  closePopup(popupImg);
+// ОТКРЫТИЕ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ
+infoUserEdit.addEventListener('click', () => {
+  nameInput.value = infoName.textContent;
+  jobInput.value = infoDescription.textContent;
+  openPopup(infoPopup);
 });
 
-/* ——————————————————————————————————————————————————————————————— */
 const setButtonState = (button, isSending) => {
   button.disabled = isSending;
   button.textContent = isSending ? 'Cохранение...' : 'Сохранить';
 };
 
-/* ——————————————————————————————————————————————————————————————— */
-const nameInput = document.querySelector('.popup__input-name');
-const jobInput = document.querySelector('.popup__input-about');
-
-const infoName = document.querySelector('.info__name');
-const infoDescription = document.querySelector('.info__description');
+const disableButton = (item) => {
+  item.classList.add('popup__save-btn_inactive');
+  item.setAttribute('disabled', true);
+};
 
 // ФОРМА РЕДАКТИРОВАНИЯ ПРОФИЛЯ — ИМЯ И ДЕЯТЕЛЬНОСТЬ
-const formPopupProfile = document.querySelector('.popup__form-profile');
-const popupSubmitProfile = formPopupProfile.querySelector('.popup__submit');
-const submitChangeUserInfo = (evt) => {
+const submitProfileInfo = (evt) => {
   evt.preventDefault();
-  setButtonState(popupSubmitProfile, true);
+  setButtonState(profileSubmitBtn, true);
   const newUserInfo = {
     name: nameInput.value,
     about: jobInput.value,
@@ -93,43 +95,15 @@ const submitChangeUserInfo = (evt) => {
       infoName.textContent = newUserInfo.name;
       infoDescription.textContent = newUserInfo.about;
       closePopup(infoPopup);
-      formElement.reset();
-      popupSaveBtn.classList.add('popup__save-btn_inactive');
-      popupSaveBtn.setAttribute('disabled', true);
+      profileForm.reset();
+      disableButton(profileSubmitBtn);
     })
     .catch(errorHandler)
     .finally(() => {
-      setButtonState(popupSubmitProfile, false);
+      setButtonState(profileSubmitBtn, false);
     });
 };
-formPopupProfile.addEventListener('submit', submitChangeUserInfo);
-/* ———————————————————————————————————————————————————————————————————————— */
-
-// ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА РЕДАКТИРОВАНИЯ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ
-const infoUserEdit = document.querySelector('.info__edit-btn');
-infoUserEdit.addEventListener('click', () => {
-  nameInput.value = infoName.textContent;
-  jobInput.value = infoDescription.textContent;
-  openPopup(infoPopup);
-});
-
-infoPopupClose.addEventListener('click', () => {
-  closePopup(infoPopup);
-});
-
-/* ——————————————————————————————————————————————————————————— */
-const formPopupAvatar = document.querySelector('.popup__form-avatar');
-const popupInputAvatar = document.querySelector('.popup__input-avatar');
-const avatarImage = document.querySelector('.profile__avatar-img');
-const popupSubmitAvatar = formPopupAvatar.querySelector('.popup__submit');
-
-//АВАТАР ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПА
-avatar.addEventListener('click', () => {
-  openPopup(avatarPopup);
-});
-avatarPopupClose.addEventListener('click', () => {
-  closePopup(avatarPopup);
-});
+profileFormPopup.addEventListener('submit', submitProfileInfo);
 
 //АВАТАР
 const submitAvatar = (evt) => {
@@ -140,8 +114,7 @@ const submitAvatar = (evt) => {
       avatarImage.src = newAvatar;
       closePopup(avatarPopup);
       formPopupAvatar.reset();
-      popupSubmitAvatar.classList.add('popup__save-btn_inactive');
-      popupSubmitAvatar.setAttribute('disabled', true);
+      disableButton(popupSubmitAvatar);
     })
     .catch(errorHandler)
     .finally(() => {
@@ -155,21 +128,12 @@ const saveDataForPopup = (data) => {
   dataForPopup = data;
 };
 
-const formDeleteCard = document.querySelector('.popup__form-delete-card');
-const popupSubmitDeleteAvatar = formDeleteCard.querySelector('.popup__submit');
-const popupDeleteCard = document.querySelector('.popup_delete-card');
-cardsPopupDelete.addEventListener('click', () => {
-  closePopup(popupDeleteCard);
-});
-
 const changeTextSubmit = (buttonElement, text) => {
   buttonElement.textContent = text;
 };
 const submitFormDeleteCard = (evt) => {
   evt.preventDefault();
   changeTextSubmit(popupSubmitDeleteAvatar, 'Удаление...');
-
-  // setButtonState(popupSubmitAvatar, true);
   deletePost(dataForPopup)
     .then(() => {
       closePopup(popupDeleteCard);
@@ -179,22 +143,20 @@ const submitFormDeleteCard = (evt) => {
       changeTextSubmit(popupSubmitDeleteAvatar, 'Да');
     });
 };
-
 popupDeleteCard.addEventListener('submit', submitFormDeleteCard);
 
 export {
-  //modal.js
   openPopup,
   closePopup,
   infoPopup,
   cardsPopup,
   popupDeleteCard,
   //
-  //index.js
   infoName,
   infoDescription,
   avatarImage,
   //
   saveDataForPopup,
   setButtonState,
+  disableButton,
 };

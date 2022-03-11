@@ -42,9 +42,13 @@
       <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
     </footer>
 
-    <section class="popup">
+    <section class="popup profile-popup">
       <div class="popup__container">
-        <form class="popup__form popup__form-profile" name="form" novalidate>
+        <form
+          class="popup__form popup__form-profile"
+          name="popup__form-profile"
+          novalidate
+        >
           <h2 class="popup__title">Редактировать профиль</h2>
           <fieldset class="popup__form-set">
             <label class="popup__form-field">
@@ -88,9 +92,13 @@
       </div>
     </section>
     <!--POPUP ДОБАВЛЕНИЯ КАРТОЧКИ-->
-    <section class="popup popup-cards">
+    <section class="popup cards-popup">
       <div class="popup__container">
-        <form class="popup__form popup__form-card" name="form" novalidate>
+        <form
+          class="popup__form popup__form-card"
+          name="popup__form-card"
+          novalidate
+        >
           <h2 class="popup__title">Новое место</h2>
           <fieldset class="popup__form-set">
             <label class="popup__form-field">
@@ -134,9 +142,13 @@
       </div>
     </section>
     <!--РЕДАКТИРОВАНИЕ АВАТАРА-->
-    <section class="popup popup_avatar">
+    <section class="popup avatar-popup">
       <div class="popup__container">
-        <form class="popup__form popup__form-avatar" name="form" novalidate>
+        <form
+          class="popup__form popup__form-avatar"
+          name="popup__form-avatar"
+          novalidate
+        >
           <h2 class="popup__title">Обновить аватар</h2>
           <fieldset class="popup__form-set">
             <label class="popup__form-field">
@@ -166,7 +178,7 @@
     </section>
 
     <!--POPUP УДАЛЕНИЯ КАРТИНОК-->
-    <section class="popup popup_delete-card">
+    <section class="popup card-delete-popup">
       <div class="popup__container">
         <form
           class="popup__form popup__form-delete-card"
@@ -191,7 +203,7 @@
     </section>
 
     <!--ОТКРЫТИЕ КАРТИНОК-->
-    <section class="popup popup_image">
+    <section class="popup image-popup">
       <div class="popup__container popup__container-image">
         <button
           class="popup__close-btn popup__close-btn_image_fullsize"
@@ -200,8 +212,8 @@
         >
           Закрыть
         </button>
-        <img class="popup_image-photo" src="#" alt="#" />
-        <p class="popup_image-caption"></p>
+        <img class="image-popup__photo" src="#" alt="#" />
+        <p class="image-popup__caption"></p>
       </div>
     </section>
 
