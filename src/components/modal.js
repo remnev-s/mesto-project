@@ -1,4 +1,4 @@
-import { updateImage, errorHandler, changeUserData } from './api.js';
+import { updateImage, handleError, changeUserData } from './api.js';
 import { deletePost } from './card.js';
 
 const popups = document.querySelectorAll('.popup');
@@ -98,7 +98,7 @@ const submitProfileInfo = (evt) => {
       profileForm.reset();
       disableButton(profileSubmitBtn);
     })
-    .catch(errorHandler)
+    .catch(handleError)
     .finally(() => {
       setButtonState(profileSubmitBtn, false);
     });
@@ -111,12 +111,12 @@ const submitAvatar = (evt) => {
   setButtonState(popupSubmitAvatar, true);
   updateImage(popupInputAvatar.value)
     .then((newAvatar) => {
-      avatarImage.src = newAvatar;
+      avatarImage.src = popupInputAvatar.value;
       closePopup(avatarPopup);
       formPopupAvatar.reset();
       disableButton(popupSubmitAvatar);
     })
-    .catch(errorHandler)
+    .catch(handleError)
     .finally(() => {
       setButtonState(popupSubmitAvatar, false);
     });
@@ -138,7 +138,7 @@ const submitFormDeleteCard = (evt) => {
     .then(() => {
       closePopup(popupDeleteCard);
     })
-    .catch(errorHandler)
+    .catch(handleError)
     .finally(() => {
       changeTextSubmit(popupSubmitDeleteAvatar, 'Да');
     });

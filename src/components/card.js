@@ -11,7 +11,7 @@ import {
   getUserInfo,
   getCards,
   addCard,
-  errorHandler,
+  handleError,
   deleteCard,
   //
   putLikeCard,
@@ -92,14 +92,14 @@ const changeReactionPost = (evt) => {
         pressed.classList.remove('elements__like-btn_active');
         updateLikesPost(likePost, res.likes.length);
       })
-      .catch(errorHandler);
+      .catch(handleError);
   } else {
     putLikeCard(likePost.id)
       .then((res) => {
         pressed.classList.add('elements__like-btn_active');
         updateLikesPost(likePost, res.likes.length);
       })
-      .catch(errorHandler);
+      .catch(handleError);
   }
 };
 
@@ -138,7 +138,7 @@ const submitNewCard = (evt) => {
       formAddNewCard.reset();
       disableButton(saveBtnCard);
     })
-    .catch(errorHandler)
+    .catch(handleError)
     .finally(() => {
       setButtonState(popupSubmitNewCard, false);
     });

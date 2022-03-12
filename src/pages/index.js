@@ -4,7 +4,7 @@ import { createCard, renderCard, templateList } from '../components/card.js';
 import { infoName, infoDescription, avatarImage } from '../components/modal.js';
 
 /* ---------------------------------------------------------------------------- */
-import { getUserInfo, getCards, errorHandler } from '../components/api.js';
+import { getUserInfo, getCards, handleError } from '../components/api.js';
 
 const getAppInfo = () => {
   return Promise.all([getUserInfo(), getCards()]);
@@ -28,7 +28,7 @@ getAppInfo()
       renderCard(cardElement, templateList);
     });
   })
-  .catch(errorHandler);
+  .catch(handleError);
 
 enableValidation({
   formSelector: '.popup__form',

@@ -10,29 +10,18 @@ const getResponseData = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 };
 
-// const getResponseData = (res) => {
-//   if (res.ok) {
-//     return res.json();
-//   }
-//
-//   return Promise.reject(`Ошибка ${res.status}`);
-// };
-
-const errorHandler = (err) => {
+const handleError = (err) => {
   console.log(err);
 };
 
 const getUserInfo = () => {
   return fetch(`${config.baseUrl}/users/me`, {
-    // method: 'GET',
     headers: config.headers,
-    // }).then(getResponseData);
-  }).then((res) => getResponseData(res));
+  }).then(getResponseData);
 };
 
 const getCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
-    // method: 'GET',
     headers: config.headers,
   }).then(getResponseData);
 };
@@ -59,22 +48,13 @@ const deleteCard = (cardId) => {
 
 // АВАТАР
 const updateImage = (newAvatar) => {
-  return (
-    fetch(`${config.baseUrl}/users/me/avatar`, {
-      method: 'PATCH',
-      headers: config.headers,
-      body: JSON.stringify({
-        avatar: newAvatar,
-      }),
-    })
-      // }).then(getResponseData);
-      .then((res) => {
-        if (res.ok) {
-          return newAvatar;
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-  );
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar: newAvatar,
+    }),
+  }).then(getResponseData);
 };
 
 /* ДАННЫЕ ПОЛЬЗОВАТЕЛЯ */
@@ -86,13 +66,7 @@ const changeUserData = (newUserInfo) => {
       name: newUserInfo.name,
       about: newUserInfo.about,
     }),
-    // }).then(getResponseData);
-  }).then((res) => {
-    if (res.ok) {
-      return newUserInfo;
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(getResponseData);
 };
 
 /* ДОБАВЛЕНИЕ ЛАЙКА */
@@ -115,7 +89,7 @@ export {
   getUserInfo,
   getCards,
   updateImage,
-  errorHandler,
+  handleError,
   changeUserData,
   addCard,
   deleteCard,
